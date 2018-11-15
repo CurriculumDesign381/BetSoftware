@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:orientation="vertical"
+                android:paddingBottom="8dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp">
+
+    <ImageView
+        android:id="@+id/img_avatar"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="11dp"
+        android:src="@drawable/five_pointedstar"
+        android:tint="@color/bg_btn"
+        android:layout_marginTop="3sp"/>
+    <!--    android:layout_alignTop="@+id/tv_time"-->
+    <!--   android:layout_alignTop="@+id/tv_time"
+        android:layout_toEndOf="@+id/img_avatar"-->
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_above="@+id/img_avatar"
+        android:layout_alignStart="@+id/img_avatar"
+        android:textColor="@android:color/black"
+        android:textSize="8sp" />
+
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/img_avatar"
+        android:layout_marginLeft="100dp"
+        android:layout_toRightOf="@+id/tv_name"
+        android:layout_toEndOf="@+id/img_avatar"
+        android:textSize="10sp"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+
+        android:layout_marginTop="6dp"
+        android:textSize="12sp"
+        android:layout_marginLeft="3sp"
+        android:layout_marginRight="3sp"
+       android:textColor="@color/colorPrimary"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_toLeftOf="@+id/tv_time"
+        android:layout_alignTop="@+id/tv_time"
+        android:text="红星SC"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="科伦坡FC"
+        android:layout_toRightOf="@+id/tv_time"
+        android:layout_alignTop="@+id/tv_time"
+        android:textSize="12sp"/>
+</RelativeLayout>
