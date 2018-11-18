@@ -12,6 +12,8 @@ public class Chat implements Parcelable {
     public long time;
     public int avatar;
     public String score;
+    public  String hometeam;
+    public String awayteam;
 
     public Chat() {
     }
@@ -22,6 +24,8 @@ public class Chat implements Parcelable {
         time = in.readLong();
         avatar = in.readInt();
         score = in.readString();
+      hometeam = in.readString();
+         awayteam = in.readString();
     }
 
     @Override
@@ -31,6 +35,8 @@ public class Chat implements Parcelable {
         dest.writeLong(time);
         dest.writeInt(avatar);
         dest.writeString(score);
+        dest.writeString(hometeam);
+        dest.writeString(awayteam);
 
     }
 

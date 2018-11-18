@@ -74,16 +74,18 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        refreshddd();
+   /*     refreshddd();*/
         View view = inflater.inflate(R.layout.qq_tab_first, container, false);
+        getWebSocketData();
         initView(view);
-        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
+       /* mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshddd();
             }
-        });
+        });*/
+
         return view;
     }
 
@@ -138,90 +140,97 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
                 // 因为启动的MsgFragment是MainFragment的兄弟Fragment,所以需要MainFragment.start()
 
                 // 也可以像使用getParentFragment()的方式,拿到父Fragment来操作 或者使用 EventBusActivityScope
-               /* ((MainFragment) getParentFragment()).startBrotherFragment(MsgFragment.newInstance(mAdapter.getMsg(position)));*/
+                ((MainFragment) getParentFragment()).startBrotherFragment(footballmessageFragment.newInstance(mAdapter.getMsg(position)));
             }
         });
     }
 
-public void refreshddd(){
-    new Thread(new Runnable() {
-        @Override
-        public void run() {
-            try {
-                Thread.sleep(1600);
-            }catch (InterruptedException e){
-                e.printStackTrace();
-            }
-            getWebSocketData();
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-               /*         initialize();*/
-                    getWebSocketData();
-
+  /*  public void refreshddd(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1600);
+                }catch (InterruptedException e){
+                    e.printStackTrace();
                 }
-            });
-        }
-    }).start();
-}
+                getWebSocketData();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+               *//*         initialize();*//*
+                        getWebSocketData();
+
+                    }
+                });
+            }
+        }).start();
+    }*/
 
     public void getWebSocketData(){
-try {
-    AsyncHttpClient.getDefaultInstance().websocket(
-            "ws://47.106.177.111:9000",// webSocket地址
-            "9000",// 端口
+        try {
+            AsyncHttpClient.getDefaultInstance().websocket(
+                    "ws://47.106.177.111:9000",// webSocket地址
+                    "9000",// 端口
 
-            new AsyncHttpClient.WebSocketConnectCallback() {
+                    new AsyncHttpClient.WebSocketConnectCallback() {
 
 
-                @Override
-                public void onCompleted(Exception ex, WebSocket webSocket) {
-                    if (ex != null) {
-                        ex.printStackTrace();
-                        Log.i("ddd", "onStringAvailable: " );
+                        @Override
+                        public void onCompleted(Exception ex, WebSocket webSocket) {
+                            if (ex != null) {
+                                ex.printStackTrace();
+                                Log.i("ddd", "onStringAvailable: " );
 
-                        return;
-                    }
-                    webSocket.send("1");// 发送消息的方法
-                    webSocket.send(new byte[10]);
-                    webSocket.setStringCallback(new WebSocket.StringCallback() {
-                        public void onStringAvailable(String s) {
-                            Gson gson = new Gson();
-                            Log.i("ddd", "onStringAvailable: " + s);
-                            list = gson.fromJson(s, new TypeToken<List<Map<String, Object>>>(){}.getType());
-                            Log.d(TAG, "onStringAvailable: "+list);
-                            competitionInfor = s;
-                            Log.d("ddd", "onStringAvailable: "+competitionInfor);
-                            mRecy.setAdapter(mAdapter);
-                            List<Chat> chatList = initDatas();
+                                return;
+                            }
+                            webSocket.send("1");// 发送消息的方法
+                            webSocket.send(new byte[10]);
+                            webSocket.setStringCallback(new WebSocket.StringCallback() {
+                                public void onStringAvailable(String s) {
+                                    Gson gson = new Gson();
+                                    Log.i("ddd", "onStringAvailable: " + s);
+                                    list = gson.fromJson(s, new TypeToken<List<Map<String, Object>>>(){}.getType());
+                                    Log.d(TAG, "onStringAvailable: "+list);
+                                    competitionInfor = s;
+                                    Log.d("ddd", "onStringAvailable: "+competitionInfor);
+                                    mRecy.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            List<Chat> chatList = initDatas();
+                                            mRecy.setAdapter(mAdapter);
+                                            //还可以更新其他的控件
+                                            chatList = initDatas();
+                                            mAdapter.setDatas(chatList);
+                                        }
+                                    });
 
-                            chatList = initDatas();
-                            mAdapter.setDatas(chatList);
 
-                        }
-                    });
-                    webSocket.setDataCallback(new DataCallback() {
-                        public void onDataAvailable(DataEmitter emitter, ByteBufferList byteBufferList) {
-                            System.out.println("I got some bytes!");
-                            // note that this data has been read
+
+
+                                }
+                            });
+                            webSocket.setDataCallback(new DataCallback() {
+                                public void onDataAvailable(DataEmitter emitter, ByteBufferList byteBufferList) {
+                                    System.out.println("I got some bytes!");
+                                    // note that this data has been read
                             /*    Toast.makeText(MainActivity.this,"I got some bytes!" ,Toast.LENGTH_SHORT).show();
                                 Toast.makeText(MainActivity.this,"网络错误2",Toast.LENGTH_SHORT).show();*/
-                            byteBufferList.recycle();
+                                    byteBufferList.recycle();
+                                }
+                            });
                         }
                     });
-                }
-            });
-}
-catch (Exception e){
-    Log.d(TAG, "getWebSocketData: error");
-}
-      
+        }
+        catch (Exception e){
+            Log.d(TAG, "getWebSocketData: error");
+        }
+
 
     }
 
   /*  private List<Chat> initDatas() {
         List<Chat> msgList = new ArrayList<>();
-
         String[] name = new String[]{"印果阿超", "印果阿超", "国际友谊", "俄甲", "伊朗超"};
         String[] chats = new String[]{"19：00", "19：30", "20：00", "20：30", "20：30"};
         String[] scores = new String[]{"0-1", "0-0", "1-1", "3-4", "5-5"};
@@ -236,24 +245,25 @@ catch (Exception e){
         return msgList;
     }*/
 
- public List<Chat> initDatas(){
-     List<Chat> msgList = new ArrayList<>();
-       for(int i =0;i<list.size();i++){
+    public List<Chat> initDatas(){
+        List<Chat> msgList = new ArrayList<>();
+        for(int i =0;i<list.size();i++){
 
-           Chat chat = new Chat();
-           chat.name = list.get(i).get("league").toString();
-           chat.message = list.get(i).get("retimeset").toString();
-           chat.score = list.get(i).get("score").toString();
-           msgList.add(chat);
+            Chat chat = new Chat();
+            chat.name = list.get(i).get("league").toString();
+            chat.message = list.get(i).get("retimeset").toString();
+            chat.score = list.get(i).get("score").toString();
+            msgList.add(chat);
+        }
+        return  msgList;
     }
-return  msgList;
-   }
 
     @Override
     public void onRefresh() {
         mRefreshLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
+                getWebSocketData();
                 mRefreshLayout.setRefreshing(false);
             }
         }, 2500);

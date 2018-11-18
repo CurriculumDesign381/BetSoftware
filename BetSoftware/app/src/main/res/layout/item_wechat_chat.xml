@@ -36,10 +36,11 @@
         android:id="@+id/tv_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/img_avatar"
+        android:layout_above="@+id/tv_time"
         android:layout_marginLeft="100dp"
-        android:layout_toRightOf="@+id/tv_name"
-        android:layout_toEndOf="@+id/img_avatar"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:textSize="10sp"/>
 
     <TextView
@@ -50,17 +51,18 @@
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
 
-        android:layout_marginTop="6dp"
-        android:textSize="12sp"
+
+        android:textSize="10sp"
         android:layout_marginLeft="3sp"
         android:layout_marginRight="3sp"
        android:textColor="@color/colorPrimary"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
+        android:textSize="10sp"
         android:layout_toLeftOf="@+id/tv_time"
         android:layout_alignTop="@+id/tv_time"
+        android:id="@+id/hometeam"
         android:text="红星SC"/>
     <TextView
         android:layout_width="wrap_content"
@@ -68,5 +70,6 @@
         android:text="科伦坡FC"
         android:layout_toRightOf="@+id/tv_time"
         android:layout_alignTop="@+id/tv_time"
-        android:textSize="12sp"/>
+        android:textSize="10sp"
+        android:id="@+id/awayteam"/>
 </RelativeLayout>

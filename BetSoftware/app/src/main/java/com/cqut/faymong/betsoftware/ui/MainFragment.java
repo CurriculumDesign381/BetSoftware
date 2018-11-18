@@ -11,6 +11,7 @@ import com.cqut.faymong.betsoftware.R;
 import com.cqut.faymong.betsoftware.event.TabSelectedEvent;
 import com.cqut.faymong.betsoftware.ui.first.FirstFragment;
 import com.cqut.faymong.betsoftware.ui.second.QQSecondFragment;
+import com.cqut.faymong.betsoftware.ui.third.ThirdFragment;
 import com.cqut.faymong.betsoftware.view.BottomBar;
 import com.cqut.faymong.betsoftware.view.BottomBarTab;
 
@@ -57,17 +58,20 @@ public class MainFragment extends SupportFragment {
         if (firstFragment == null) {
             mFragments[FIRST] = FirstFragment.newInstance();
             mFragments[SECOND] = QQSecondFragment.newInstance();
+            mFragments[THIRD] = ThirdFragment.newInstance();
 
 
             loadMultipleRootFragment(R.id.fl_tab_container, FIRST,
                     mFragments[FIRST],
-                    mFragments[SECOND]);
+                    mFragments[SECOND],
+                    mFragments[THIRD]);
         } else {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
 
             // 这里我们需要拿到mFragments的引用
             mFragments[FIRST] = firstFragment;
             mFragments[SECOND] = findFragment(QQSecondFragment.class);
+            mFragments[THIRD] = findFragment(ThirdFragment.class);
 
         }
     }
@@ -77,7 +81,9 @@ public class MainFragment extends SupportFragment {
 
         mBottomBar
                 .addItem(new BottomBarTab(_mActivity, R.drawable.livebroadcast_demo, getString(R.string.msg)))
-                .addItem(new BottomBarTab(_mActivity, R.drawable.guessingcompetition_demo, getString(R.string.discover)));
+                .addItem(new BottomBarTab(_mActivity, R.drawable.betrecord, "下注"))
+                .addItem(new BottomBarTab(_mActivity,R.drawable.mine,"我"));
+
 
 
         // 模拟未读消息

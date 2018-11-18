@@ -5,5 +5,12 @@ package com.cqut.faymong.betsoftware.entity;
  */
 
 public class CompetitionInfor {
+    public String message;
+
+    public CompetitionInfor(){}
+
+    public CompetitionInfor(String msg){
+        message = msg;
+    }
 
 }

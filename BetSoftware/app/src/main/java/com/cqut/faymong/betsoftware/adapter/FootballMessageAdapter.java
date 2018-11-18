@@ -8,32 +8,40 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.cqut.faymong.betsoftware.R;
 import com.cqut.faymong.betsoftware.entity.Chat;
+import com.cqut.faymong.betsoftware.entity.CompetitionInfor;
 import com.cqut.faymong.betsoftware.listener.OnItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * Created by YoKeyword on 16/6/30.
+ * Created by fei on 2018/11/16.
  */
-public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.VH> {
+
+public class FootballMessageAdapter extends RecyclerView.Adapter<FootballMessageAdapter.VH>{
+    private static final String ARG_MSG = "arg_msg";
     private LayoutInflater mInflater;
-    private List<Chat> mItems = new ArrayList<>();
+    private Context mContext;
+
+    private List<CompetitionInfor> mItems = new ArrayList<>();
 
     private OnItemClickListener mClickListener;
 
-    public ChatAdapter(Context context) {
+    public FootballMessageAdapter(Context context) {
+        mContext = context;
         mInflater = LayoutInflater.from(context);
     }
 
-    public void setDatas(List<Chat> beans) {
+    public void setDatas(List<CompetitionInfor> beans) {
         mItems.clear();
         mItems.addAll(beans);
         notifyDataSetChanged();
+    }
+    public void addMsg(CompetitionInfor bean) {
+        mItems.add(bean);
+        notifyItemInserted(mItems.size() - 1);
     }
 
     public void refreshMsg(Chat bean) {
@@ -45,7 +53,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.VH> {
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_wechat_chat, parent, false);
+        View view = mInflater.inflate(R.layout.football_message, parent, false);
         final VH holder = new VH(view);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,13 +68,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.VH> {
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
-        Chat item = mItems.get(position);
+        CompetitionInfor item = mItems.get(position);
+        holder.footballmessage.setText(item.message);
 
-        holder.tvName.setText(item.name);
-        holder.tvMsg.setText(item.message);
-        holder.tvTime.setText(item.score);
-        holder.hometeam.setText(item.hometeam);
-        holder.awayteam.setText(item.awayteam);
+
 
     }
 
@@ -79,22 +84,17 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.VH> {
         mClickListener = listener;
     }
 
-    public Chat getMsg(int position) {
-        return mItems.get(position);
-    }
+
 
     class VH extends RecyclerView.ViewHolder {
-        private ImageView imgAvatar;
-        private TextView tvName, tvMsg, tvTime,awayteam,hometeam;
+
+        private TextView footballmessage;
 
         public VH(View itemView) {
             super(itemView);
-            imgAvatar = (ImageView) itemView.findViewById(R.id.img_avatar);
-            tvName = (TextView) itemView.findViewById(R.id.tv_name);
-            tvMsg = (TextView) itemView.findViewById(R.id.tv_msg);
-            tvTime = (TextView) itemView.findViewById(R.id.tv_time);
-            awayteam = (TextView)itemView.findViewById(R.id.awayteam);
-            hometeam = (TextView)itemView.findViewById(R.id.hometeam);
+
+            footballmessage = (TextView)itemView.findViewById(R.id.football_message);
+
 
         }
     }
