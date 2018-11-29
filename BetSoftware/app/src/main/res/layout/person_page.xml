@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    android:overScrollMode="never">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#47191a14">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:background="#fff"
+            android:id="@+id/part_third5">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:weightSum="2"
+                android:id="@+id/linear5">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="功能列表"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+    <!--    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+        </RelativeLayout>-->
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:weightSum="2"
+
+            android:background="#fff"
+            android:id="@+id/part_third2">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:weightSum="2"
+                android:id="@+id/linear1">
+                <ImageView
+                    android:id="@+id/bookshelf_2"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/login_demo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="13dp"
+                    android:text="批量登录"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+
+            android:background="#99999999"/>
+
+
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+
+            android:background="#99999999"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:background="#fff"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:weightSum="2"
+                android:id="@+id/linear6">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/infor_show" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="13dp"
+                    android:text="下注用户信息管理"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+
+            android:background="#99999999"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:background="#fff"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:weightSum="2"
+                android:id="@+id/linear3">
+
+                <ImageView
+
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/account_add" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="13dp"
+                    android:text="增加用户"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+
+            android:background="#99999999"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:background="#fff"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:weightSum="2"
+                android:id="@+id/linear7">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/cancellation_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="13dp"
+                    android:text="用户注销"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+
+            android:background="#99999999"/>
+
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+
+            android:background="#99999999"/>
+
+    </LinearLayout>
+</ScrollView>
+

@@ -43,6 +43,9 @@ public class FootballMessageAdapter extends RecyclerView.Adapter<FootballMessage
         mItems.add(bean);
         notifyItemInserted(mItems.size() - 1);
     }
+    public void clear(){
+        mItems.clear();
+    }
 
     public void refreshMsg(Chat bean) {
         int index = mItems.indexOf(bean);

@@ -8,20 +8,97 @@
         android:layout_marginBottom="@dimen/bottombar_height"
         android:layout_height="match_parent"
         android:orientation="vertical">
-<TextView
+        <include layout="@layout/toolbar"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="8dp"
+            android:background="@drawable/timg"   >
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_above="@+id/img_avatar"
+                android:layout_alignStart="@+id/img_avatar"
+                android:textColor="@android:color/black"
+                android:textSize="8sp" />
+
+            <TextView
+                android:id="@+id/tv_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/tv_time"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="100dp"
+                android:textSize="10sp"
+            />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+
+                android:layout_centerVertical="true"
+                android:text="0-2"
+                android:textColor="@color/tab_unselect"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/hometeam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="52dp"
+                android:layout_toStartOf="@+id/tv_time"
+                android:text="红星SC"
+                android:textColor="@color/tab_unselect"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/awayteam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="39dp"
+                android:layout_toEndOf="@+id/tv_time"
+                android:text="科伦坡FC"
+                android:textColor="@color/tab_unselect"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+            android:layout_marginTop="15dp"
     android:gravity="center"
     android:text="事件"/>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recy"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refresh_layout1"
             android:layout_width="match_parent"
-            android:background="@android:color/white"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-    </LinearLayout>
+            android:layout_height="match_parent">
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recy"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="23dp"
+                android:textColor="@android:color/black"
+                android:layout_weight="1"
+                android:background="@android:color/white" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
 
 
 

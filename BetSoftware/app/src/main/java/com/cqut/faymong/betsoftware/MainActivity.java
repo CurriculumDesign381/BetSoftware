@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
 
@@ -34,7 +35,6 @@ public class MainActivity extends SupportActivity  implements BaseMainFragment.O
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wechat_activity_main);
-
         if (findFragment(MainFragment.class) == null) {
             loadRootFragment(R.id.fl_container, MainFragment.newInstance());
         }
@@ -91,6 +91,32 @@ public class MainActivity extends SupportActivity  implements BaseMainFragment.O
     public void onBackToFirstFragment() {
 
     }
+    //记录用户首次点击返回键的时间
+    private long firstTime = 0;
+
+   /* *//**
+     * 第一种解决办法 通过监听keyUp
+     * @param keyCode
+     * @param event
+     * @return
+     *//*
+
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+            long secondTime = System.currentTimeMillis();
+            if (secondTime - firstTime > 2000) {
+                Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                firstTime = secondTime;
+                return true;
+            } else {
+                System.exit(0);
+            }
+        }
+
+        return super.onKeyUp(keyCode, event);
+    }*/
 
 
 

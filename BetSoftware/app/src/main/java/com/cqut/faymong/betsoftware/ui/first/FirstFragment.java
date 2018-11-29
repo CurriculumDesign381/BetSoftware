@@ -1,6 +1,7 @@
 package com.cqut.faymong.betsoftware.ui.first;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.cqut.faymong.betsoftware.MainActivity;
 import com.cqut.faymong.betsoftware.R;
+import com.cqut.faymong.betsoftware.activity.loginActivity;
 import com.cqut.faymong.betsoftware.adapter.ChatAdapter;
 import com.cqut.faymong.betsoftware.base.BaseMainFragment;
 import com.cqut.faymong.betsoftware.entity.Chat;
@@ -37,6 +39,8 @@ import com.koushikdutta.async.http.AsyncHttpClient;
 import com.koushikdutta.async.http.WebSocket;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +49,7 @@ import java.util.Map;
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by fei on 2018/11/14.
@@ -54,11 +59,11 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
     private Toolbar mToolbar;
     private SwipeRefreshLayout mRefreshLayout;
     private RecyclerView mRecy;
-
     private boolean mInAtTop = true;
     private int mScrollTotal;
     private String competitionInfor;
     private ChatAdapter mAdapter;
+    private  String eventid;
     List<Map<String,Object>> list = new ArrayList<>();
     public static FirstFragment newInstance() {
 
@@ -68,8 +73,6 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
         fragment.setArguments(args);
         return fragment;
     }
-
-
 
     @Nullable
     @Override
@@ -118,7 +121,7 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
         mRecy.setAdapter(mAdapter);
         List<Chat> chatList = initDatas();
 
-        chatList = initDatas();
+
         mAdapter.setDatas(chatList);
 
         mRecy.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -140,74 +143,66 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
                 // 因为启动的MsgFragment是MainFragment的兄弟Fragment,所以需要MainFragment.start()
 
                 // 也可以像使用getParentFragment()的方式,拿到父Fragment来操作 或者使用 EventBusActivityScope
+                Chat chat = mAdapter.getMsg(position);
+                eventid = chat.evenid;
+                keepLoginStatus(eventid);
                 ((MainFragment) getParentFragment()).startBrotherFragment(footballmessageFragment.newInstance(mAdapter.getMsg(position)));
+
+
             }
         });
     }
 
-  /*  public void refreshddd(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1600);
-                }catch (InterruptedException e){
-                    e.printStackTrace();
-                }
-                getWebSocketData();
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-               *//*         initialize();*//*
-                        getWebSocketData();
-
-                    }
-                });
-            }
-        }).start();
-    }*/
+    public  void  keepLoginStatus(String  eventid){
+        SharedPreferences share = getActivity().getSharedPreferences("loginStatus", MODE_PRIVATE);
+        SharedPreferences.Editor edit = share.edit();//编辑文件
+        edit.putString("eventid",eventid);
+        edit.commit();
+    }
 
     public void getWebSocketData(){
         try {
             AsyncHttpClient.getDefaultInstance().websocket(
                     "ws://47.106.177.111:9000",// webSocket地址
                     "9000",// 端口
-
                     new AsyncHttpClient.WebSocketConnectCallback() {
-
-
                         @Override
                         public void onCompleted(Exception ex, WebSocket webSocket) {
                             if (ex != null) {
                                 ex.printStackTrace();
                                 Log.i("ddd", "onStringAvailable: " );
-
                                 return;
                             }
-                            webSocket.send("1");// 发送消息的方法
+                            webSocket.send("game");// 发送消息的方法
                             webSocket.send(new byte[10]);
                             webSocket.setStringCallback(new WebSocket.StringCallback() {
                                 public void onStringAvailable(String s) {
                                     Gson gson = new Gson();
                                     Log.i("ddd", "onStringAvailable: " + s);
-                                    list = gson.fromJson(s, new TypeToken<List<Map<String, Object>>>(){}.getType());
-                                    Log.d(TAG, "onStringAvailable: "+list);
-                                    competitionInfor = s;
-                                    Log.d("ddd", "onStringAvailable: "+competitionInfor);
-                                    mRecy.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            List<Chat> chatList = initDatas();
-                                            mRecy.setAdapter(mAdapter);
-                                            //还可以更新其他的控件
-                                            chatList = initDatas();
-                                            mAdapter.setDatas(chatList);
-                                        }
-                                    });
+                                    if(!s.equals("{}")) {
+                                        JSONArray jsonArray = parseJSONWithJSONObject(s);
+                                        list = gson.fromJson(jsonArray.toString(), new TypeToken<List<Map<String, Object>>>() {
+                                        }.getType());
+                                        Log.d(TAG, "onStringAvailable: " + list);
+                                        competitionInfor = s;
+                                        Log.d("ddd", "onStringAvailable: " + competitionInfor);
+                                        mRecy.post(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                List<Chat> chatList = initDatas();
+                                                mRecy.setAdapter(mAdapter);
+                                                //还可以更新其他的控件
+                                                chatList = initDatas();
+                                                mAdapter.setDatas(chatList);
+                                         /*   JSONObject obj = new JSONObject().fromObject(sd);*/
 
+                                            }
+                                        });
+                                    }
 
-
-
+                                    else{
+                                        Toast.makeText(getActivity(),"亲，没有数据哦！" ,Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
                             webSocket.setDataCallback(new DataCallback() {
@@ -228,7 +223,20 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
 
 
     }
+    private  JSONArray parseJSONWithJSONObject(String jsonData){
+        JSONArray jsonArray = null;
+        try{
 
+            JSONObject object = new JSONObject(jsonData);
+             jsonArray = object.getJSONArray("db");
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+
+        }
+        return jsonArray;
+    }
   /*  private List<Chat> initDatas() {
         List<Chat> msgList = new ArrayList<>();
         String[] name = new String[]{"印果阿超", "印果阿超", "国际友谊", "俄甲", "伊朗超"};
@@ -248,11 +256,13 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
     public List<Chat> initDatas(){
         List<Chat> msgList = new ArrayList<>();
         for(int i =0;i<list.size();i++){
-
             Chat chat = new Chat();
             chat.name = list.get(i).get("league").toString();
             chat.message = list.get(i).get("retimeset").toString();
             chat.score = list.get(i).get("score").toString();
+            chat.hometeam = list.get(i).get("hometeam").toString();
+            chat.awayteam = list.get(i).get("awayteam").toString();
+            chat.evenid = list.get(i).get("eventid").toString();
             msgList.add(chat);
         }
         return  msgList;

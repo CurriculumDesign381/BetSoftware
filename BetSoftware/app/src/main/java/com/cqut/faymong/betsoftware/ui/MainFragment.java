@@ -24,7 +24,6 @@ import me.yokeyword.fragmentation.SupportFragment;
  */
 public class MainFragment extends SupportFragment {
     private static final int REQ_MSG = 10;
-
     public static final int FIRST = 0;
     public static final int SECOND = 1;
     public static final int THIRD = 2;
@@ -85,21 +84,11 @@ public class MainFragment extends SupportFragment {
                 .addItem(new BottomBarTab(_mActivity,R.drawable.mine,"我"));
 
 
-
-        // 模拟未读消息
-        mBottomBar.getItem(FIRST).setUnreadCount(9);
-
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position, int prePosition) {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
 
-                BottomBarTab tab = mBottomBar.getItem(FIRST);
-                if (position == FIRST) {
-                    tab.setUnreadCount(0);
-                } else {
-                    tab.setUnreadCount(tab.getUnreadCount() + 1);
-                }
             }
 
             @Override

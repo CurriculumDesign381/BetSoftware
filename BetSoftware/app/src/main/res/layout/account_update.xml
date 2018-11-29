@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none"
+    android:overScrollMode="never">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="修改账户信息"
+            android:textAlignment="center"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:layout_marginTop="10dp"
+            android:background="#fff"
+            android:id="@+id/part_third2">
+
+            <LinearLayout
+                android:id="@+id/blackOutLayoutName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bwater_top_input"
+                android:orientation="horizontal"
+                android:gravity="left|center_horizontal"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:paddingLeft="10dp">
+
+              <!--  <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:src="@drawable/account_demo"
+                    />-->
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:text="账户："/>
+                <EditText
+                    android:id="@+id/account"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="2dp"
+                    android:hint="请输入账号"
+                    android:textSize="20sp"
+                    android:background="@null"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:layout_marginTop="10dp"
+            android:background="#fff"
+            >
+
+            <LinearLayout
+                android:id="@+id/blackOutLayoutName1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bwater_top_input"
+                android:orientation="horizontal"
+                android:gravity="left|center_horizontal"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:paddingLeft="10dp">
+
+              <!--  <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:src="@drawable/account_demo"
+                    />-->
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:text="下注账户："/>
+                <EditText
+                    android:id="@+id/betaccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="2dp"
+                    android:hint="请输入下注账号"
+                    android:textSize="20sp"
+                    android:background="@null"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:layout_marginTop="10dp"
+            android:background="#fff"
+            >
+            <LinearLayout
+                android:id="@+id/blackOutLayoutName4"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bwater_top_input"
+                android:orientation="horizontal"
+                android:gravity="left|center_horizontal"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:paddingLeft="10dp">
+
+                <!--<ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:src="@drawable/leftimg"
+                    />-->
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:text="下注密码："/>
+
+                <EditText
+                    android:id="@+id/betpassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="2dp"
+                    android:hint="请输入下注密码"
+                    android:textSize="20sp"
+                    android:background="@null"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:layout_marginTop="10dp"
+            android:background="#fff"
+            >
+            <LinearLayout
+                android:id="@+id/blackOutLayoutName5"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bwater_top_input"
+                android:orientation="horizontal"
+                android:gravity="left|center_horizontal"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:paddingLeft="10dp">
+
+             <!--   <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:src="@drawable/leftimg"
+                    />-->
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:text="域名："/>
+                <EditText
+                    android:id="@+id/domain"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="2dp"
+                    android:hint="请输入域名"
+                    android:textSize="20sp"
+                    android:background="@null"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:layout_marginTop="10dp"
+            android:background="#fff"
+            >
+            <LinearLayout
+                android:id="@+id/blackOutLayoutName2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bwater_top_input"
+                android:orientation="horizontal"
+                android:gravity="left|center_horizontal"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:paddingLeft="10dp">
+
+              <!--  <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="5dp"
+                    android:src="@drawable/leftimg"
+                    />-->
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:text="下注金额："/>
+                <EditText
+                    android:id="@+id/betamount"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="2dp"
+                    android:hint="请输入下注金额"
+                    android:textSize="20sp"
+                    android:background="@null"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+            android:weightSum="2"
+            android:layout_marginTop="10dp"
+            android:background="#fff"
+            >
+            <LinearLayout
+                android:id="@+id/blackOutLayoutName3"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                android:orientation="horizontal"
+                android:gravity="left|center_horizontal"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:paddingLeft="10dp">
+
+                <Button
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dip"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_nor_down"
+                    android:gravity="center"
+                    android:id="@+id/updateaccount"
+                    android:text="修改"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>
+

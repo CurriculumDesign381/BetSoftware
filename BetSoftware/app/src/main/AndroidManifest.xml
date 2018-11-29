@@ -13,16 +13,18 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
 
-
         </activity>
-        <activity android:name=".activity.loginActivity">
+        <activity android:name=".activity.loginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.first.FirstActivity"></activity>
+        <activity android:name=".ui.first.FirstActivity" />
+        <activity android:name=".activity.AddbetAccountActivity" />
+        <activity android:name=".activity.InformationDisplayActivity" />
+        <activity android:name=".activity.updateAccountActivity"></activity>
     </application>
 
 </manifest>

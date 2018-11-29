@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">BetSoftware</string>
     <string name="time">2 days ago</string>
-    <string name="home">首页</string>
+    <string name="home">滚球事件</string>
+    <string name="betteam">下注</string>
     <string name="send">发送</string>
     <string name="msg">直播</string>
     <string name="discover">竞猜</string>
     <string name="more">动态</string>
+    <string name="press_again_exit">再按一次退出</string>
 </resources>

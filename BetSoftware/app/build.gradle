@@ -9,7 +9,7 @@ android {
     defaultConfig {
 
         applicationId "com.cqut.faymong.simpleqq"
-        minSdkVersion 22
+        minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -48,7 +48,14 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.android.support:recyclerview-v7:26.1.0'
     compile 'com.android.support:design:26.1.0'
-   compile 'com.zhy:okhttputils:2.6.2'
+    compile 'com.zhy:okhttputils:2.6.2'
     compile 'com.koushikdutta.async:androidasync:2.+'
     compile 'com.google.code.gson:gson:2.8.1'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'jp.wasabeef:glide-transformations:2.0.1'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'jp.wasabeef:glide-transformations:2.0.1'
+    implementation 'com.orhanobut:logger:2.2.0'
+    compile 'com.github.huangyanbin:SmartTable:2.2.0'
 }

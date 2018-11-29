@@ -109,8 +109,13 @@ private  static final String TAG = "loginActivity";
    mButton.setOnClickListener(new View.OnClickListener() {
        @Override
        public void onClick(View v) {
+
           account= mUsername.getText().toString();
           password = mPassWord.getText().toString();
+           SharedPreferences share = loginActivity.this.getSharedPreferences("account", MODE_PRIVATE);
+           SharedPreferences.Editor edit = share.edit();//编辑文件
+           edit.putString("account",account);
+           edit.commit();
          /*  getLoginData();*/
            getdata();
        }
