@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:scrollbars="none"
     android:overScrollMode="never">
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -89,22 +91,15 @@
 
             </LinearLayout>
         </LinearLayout>
-        <View
 
+        <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_alignParentBottom="true"
-
             android:background="#99999999"/>
 
 
-        <View
 
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-
-            android:background="#99999999"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -144,8 +139,15 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_alignParentBottom="true"
-
             android:background="#99999999"/>
+
+
+
+
+
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -193,6 +195,11 @@
 
             android:background="#99999999"/>
 
+
+
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -230,13 +237,7 @@
 
             </LinearLayout>
         </LinearLayout>
-        <View
 
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-
-            android:background="#99999999"/>
 
         <View
 
@@ -245,6 +246,7 @@
             android:layout_alignParentBottom="true"
 
             android:background="#99999999"/>
+
 
     </LinearLayout>
 </ScrollView>

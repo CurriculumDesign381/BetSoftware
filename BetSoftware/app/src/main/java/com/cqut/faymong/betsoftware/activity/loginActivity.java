@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -34,7 +36,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class loginActivity extends SupportActivity {
+public class loginActivity extends SupportActivity  implements View.OnClickListener{
 
    /* @BindView(R.id.part_second)
     LinearLayout l2;
@@ -47,6 +49,7 @@ private  static final String TAG = "loginActivity";
     private EditText mUsername;
     private EditText mPassWord;
      private Button mButton;
+     private ImageView iv_see_password;
 
     private String account ;
     private String password;
@@ -58,6 +61,7 @@ private  static final String TAG = "loginActivity";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign);
         initView();
+
         login();
     }
 
@@ -65,6 +69,22 @@ private  static final String TAG = "loginActivity";
          mButton=(Button)findViewById(R.id.sign_login);
         mUsername=(EditText)findViewById(R.id.admin);
         mPassWord=(EditText)findViewById(R.id.login_password);
+        iv_see_password = (ImageView)findViewById(R.id.iv_see_password);
+        iv_see_password.setOnClickListener(this);
+
+    }
+
+    private void    setPasswordVisibility() {
+        if (iv_see_password.isSelected()) {
+            iv_see_password.setSelected(false);
+            //密码不可见
+            mPassWord.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+
+        } else {
+            iv_see_password.setSelected(true);
+            //密码可见
+            mPassWord.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        }
 
     }
     public void getdata(){
@@ -79,17 +99,15 @@ private  static final String TAG = "loginActivity";
                 {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Toast.makeText(loginActivity.this,e.toString()+"error",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(loginActivity.this,"请检查网络" ,Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Toast.makeText(loginActivity.this,response,Toast.LENGTH_SHORT).show();
                         status = Integer.parseInt(response);
                         if(status==1){
                             Log.d(TAG, "success: "+mUsername.getText().toString());
                             Toast.makeText(loginActivity.this,  "登录成功", Toast.LENGTH_SHORT).show();
-
                             status = 1;
                             keepLoginStatus(status);
                             Intent intent = new Intent(loginActivity.this,MainActivity.class);
@@ -168,5 +186,13 @@ password = mPassWord.getText().toString();
 }
 
 
+    @Override
+    public void onClick(View view) {
+switch (view.getId()){
+    case R.id.iv_see_password:
+        setPasswordVisibility();    //改变图片并设置输入框的文本可见或不可见
+        break;
 
+}
+    }
 }

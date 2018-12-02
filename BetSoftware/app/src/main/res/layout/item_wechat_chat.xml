@@ -9,12 +9,14 @@
         android:id="@+id/img_avatar"
         android:layout_width="20dp"
         android:layout_height="20dp"
+
         android:layout_alignParentStart="true"
+
         android:layout_centerVertical="true"
-        android:layout_marginStart="11dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="3sp"
         android:src="@drawable/five_pointedstar"
-        android:tint="@color/bg_btn"
-        android:layout_marginTop="3sp"/>
+        android:tint="@color/bg_btn" />
     <!--    android:layout_alignTop="@+id/tv_time"-->
     <!--   android:layout_alignTop="@+id/tv_time"
         android:layout_toEndOf="@+id/img_avatar"-->
@@ -22,13 +24,18 @@
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
 
         android:layout_above="@+id/img_avatar"
-        android:layout_alignStart="@+id/img_avatar"
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="-3dp"
+        android:text="泰国大学联赛"
         android:textColor="@android:color/black"
-        android:textSize="10sp"
-        android:text="泰国大学联赛"/>
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/tv_msg"
@@ -58,14 +65,17 @@
         android:layout_toLeftOf="@+id/tv_time"
         android:layout_alignTop="@+id/tv_time"
         android:textColor="@android:color/black"
+        android:gravity="right"
         android:id="@+id/hometeam"
-        android:text="红星SC"/>
+        android:layout_marginLeft="40dp"
+        android:text="红星SC红星SC红星SC红星SC红星SC"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="科伦坡FC"
+        android:text="科伦坡FC科伦坡FC科伦坡FC科伦坡FC"
         android:layout_toRightOf="@+id/tv_time"
         android:layout_alignTop="@+id/tv_time"
+        android:layout_marginRight="40dp"
         android:textColor="@android:color/black"
         android:textSize="11sp"
         android:id="@+id/awayteam"/>
@@ -76,14 +86,12 @@
         android:layout_height="20dp"
 
         android:layout_alignBottom="@+id/awayteam"
-        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/tv_msg"
+        android:layout_alignStart="@+id/tv_msg"
         android:src="@drawable/livebroadcast_icon" />
     <View
-
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_alignParentBottom="true"
-
         android:background="#99999999"/>
-
 </RelativeLayout>

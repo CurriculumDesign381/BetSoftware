@@ -20,6 +20,8 @@ import com.cqut.faymong.betsoftware.base.BaseMainFragment;
 import com.cqut.faymong.betsoftware.entity.Chat;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -153,7 +155,8 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Toast.makeText(getActivity(), response.toString(), Toast.LENGTH_SHORT).show();
+                        Logger.addLogAdapter(new AndroidLogAdapter());
+                        Logger.json(response);
                         Gson gson = new Gson();
 
              /*        jsonObject =  parseJSONWithJSONObject(response);*/

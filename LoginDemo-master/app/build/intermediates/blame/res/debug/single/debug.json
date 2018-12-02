@@ -1,0 +1,70 @@
+[
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_launcher.png.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\drawable-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_icon_login_account.png.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\drawable-mdpi\\icon_login_account.png"
+    },
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_icon_login_pw.png.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\drawable-mdpi\\icon_login_pw.png"
+    },
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_launcher.png.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\drawable-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\layout_dialog_loading.xml.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\layout\\dialog_loading.xml"
+    },
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_icon_dialog_progressbar.png.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\drawable-mdpi\\icon_dialog_progressbar.png"
+    },
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_icon_nosee_pass.png.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\drawable-mdpi\\icon_nosee_pass.png"
+    },
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable_progressbar_animated.xml.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\drawable\\progressbar_animated.xml"
+    },
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bg_rect_transparent_shap.xml.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\drawable\\bg_rect_transparent_shap.xml"
+    },
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable_image_password_bg.xml.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\drawable\\image_password_bg.xml"
+    },
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable_btn_orange_selector.xml.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\drawable\\btn_orange_selector.xml"
+    },
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi_ic_launcher.png.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\drawable-ldpi\\ic_launcher.png"
+    },
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_icon_see_pass.png.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\drawable-mdpi\\icon_see_pass.png"
+    },
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\layout_main.xml.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_login_after.xml.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\layout\\activity_login_after.xml"
+    },
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_launcher.png.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_login.xml.flat",
+        "source": "E:\\Code\\ddd\\BetSoftware\\LoginDemo-master\\app\\src\\main\\res\\layout\\activity_login.xml"
+    }
+]

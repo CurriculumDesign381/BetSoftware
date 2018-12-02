@@ -1,6 +1,7 @@
 package com.cqut.faymong.betsoftware.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,7 +33,6 @@ public class AddbetAccountActivity extends AppCompatActivity {
     public  String betpassword;
     public String domain;
     public  String betamount;
-    private EditText ed_account ;
     private  EditText ed_betaccount;
     private  EditText ed_betpassword;
     private EditText ed_domain;
@@ -57,7 +57,8 @@ public class AddbetAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 可以使用 switch 通过匹配控件id 设置不同的按钮提示不同内容
                 // view.getId() 得到点击的控件的id
-                account = ed_account.getText().toString();
+                SharedPreferences share = AddbetAccountActivity.this.getSharedPreferences("account",MODE_PRIVATE);
+                account= share.getString("account",null);
                 betaccount = ed_betaccount.getText().toString();
                betpassword =ed_betpassword.getText().toString();
                domain = ed_domain.getText().toString();
@@ -66,7 +67,6 @@ public class AddbetAccountActivity extends AppCompatActivity {
                 switch (v.getId()) {
                     case R.id.addaccount:
                         Toast.makeText(AddbetAccountActivity.this, "您点击添加button"+account, Toast.LENGTH_SHORT).show();
-
                         getdata();
                         break;
                     default:
@@ -80,7 +80,7 @@ public class AddbetAccountActivity extends AppCompatActivity {
 
 
     public void initView(){
-        ed_account = findViewById(R.id.account);
+
         ed_betaccount = findViewById(R.id.betaccount);
         ed_betpassword = findViewById(R.id.betpassword);
         ed_betamount = findViewById(R.id.betamount);

@@ -71,7 +71,7 @@ public class InformationDisplayActivity extends SupportActivity implements Swipe
 
 
 
-        account = new Column<>("账户", "account");
+        account = new Column<>("下注账户", "account");
         domain = new Column<>("域名", "domain");
         int size = DensityUtils.dp2px(this,20);
         update = new Column<>("编辑", "update",new ImageResDrawFormat<Boolean>(size,size) {    //设置"操作"这一列以图标显示 true、false 的状态

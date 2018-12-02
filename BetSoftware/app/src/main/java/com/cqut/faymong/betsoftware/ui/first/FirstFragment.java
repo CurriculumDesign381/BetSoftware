@@ -37,9 +37,14 @@ import com.koushikdutta.async.DataEmitter;
 import com.koushikdutta.async.callback.DataCallback;
 import com.koushikdutta.async.http.AsyncHttpClient;
 import com.koushikdutta.async.http.WebSocket;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -47,6 +52,7 @@ import java.util.List;
 import java.util.Map;
 
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
+import okhttp3.Call;
 
 import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
@@ -64,6 +70,7 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
     private String competitionInfor;
     private ChatAdapter mAdapter;
     private  String eventid;
+    public int result;
     List<Map<String,Object>> list = new ArrayList<>();
     public static FirstFragment newInstance() {
 
@@ -160,7 +167,8 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
         edit.commit();
     }
 
-    public void getWebSocketData(){
+    public int getWebSocketData(){
+         result =0;
         try {
             AsyncHttpClient.getDefaultInstance().websocket(
                     "ws://47.106.177.111:9000",// webSocket地址
@@ -178,6 +186,8 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
                             webSocket.setStringCallback(new WebSocket.StringCallback() {
                                 public void onStringAvailable(String s) {
                                     Gson gson = new Gson();
+                                    Logger.addLogAdapter(new AndroidLogAdapter());
+                                    Logger.json(s);
                                     Log.i("ddd", "onStringAvailable: " + s);
                                     if(!s.equals("{}")) {
                                         JSONArray jsonArray = parseJSONWithJSONObject(s);
@@ -185,7 +195,8 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
                                         }.getType());
                                         Log.d(TAG, "onStringAvailable: " + list);
                                         competitionInfor = s;
-                                        Log.d("ddd", "onStringAvailable: " + competitionInfor);
+                                        result = 1;
+                               /*         Toast.makeText(getActivity(),"刷新成功" ,Toast.LENGTH_SHORT).show();*/
                                         mRecy.post(new Runnable() {
                                             @Override
                                             public void run() {
@@ -195,11 +206,9 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
                                                 chatList = initDatas();
                                                 mAdapter.setDatas(chatList);
                                          /*   JSONObject obj = new JSONObject().fromObject(sd);*/
-
                                             }
                                         });
                                     }
-
                                     else{
                                         Toast.makeText(getActivity(),"亲，没有数据哦！" ,Toast.LENGTH_SHORT).show();
                                     }
@@ -209,18 +218,18 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
                                 public void onDataAvailable(DataEmitter emitter, ByteBufferList byteBufferList) {
                                     System.out.println("I got some bytes!");
                                     // note that this data has been read
-                            /*    Toast.makeText(MainActivity.this,"I got some bytes!" ,Toast.LENGTH_SHORT).show();
-                                Toast.makeText(MainActivity.this,"网络错误2",Toast.LENGTH_SHORT).show();*/
+
                                     byteBufferList.recycle();
                                 }
                             });
                         }
                     });
+
         }
         catch (Exception e){
             Log.d(TAG, "getWebSocketData: error");
         }
-
+return result;
 
     }
     private  JSONArray parseJSONWithJSONObject(String jsonData){
@@ -273,10 +282,16 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
         mRefreshLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
-                getWebSocketData();
+            /*  int result =   getWebSocketData();*/
+                refreshData();
+
                 mRefreshLayout.setRefreshing(false);
             }
         }, 2500);
+      /*  if(result==1)
+            Toast.makeText(getActivity(),"刷新成功" ,Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getActivity(),"亲，没有网络了" ,Toast.LENGTH_SHORT).show();*/
     }
 
 
@@ -303,5 +318,52 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
     public void onDestroyView() {
         super.onDestroyView();
         EventBusActivityScope.getDefault(_mActivity).unregister(this);
+    }
+
+
+    public void refreshData(){
+        String url = "http://47.106.177.111:8000/game";
+        OkHttpUtils
+                .get()
+                .url(url)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        if(e.toString().equals("java.net.ConnectException: Failed to connect to /47.106.177.111:8000"))
+                        Toast.makeText(getActivity(), "请检查网络是否连接", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onResponse(String res, int id) {
+                        Logger.addLogAdapter(new AndroidLogAdapter());
+                        Logger.json(res);
+                        Gson gson = new Gson();
+                        /*        jsonObject =  parseJSONWithJSONObject(response);*/
+                        JSONArray      jsonArray =  parseJSONWithJSONObject(res);
+                        list = gson.fromJson(jsonArray.toString(), new TypeToken<List<Map<String, Object>>>() {
+                        }.getType());
+
+                        Log.d(TAG, "onStringAvailable: "+list);
+                        mRecy.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                List<Chat> chatList = null;
+
+                                    chatList = initDatas();
+                                    if(chatList!=null)
+                                        Toast.makeText(getActivity(),  "刷新成功", Toast.LENGTH_SHORT).show();
+                                    else
+                                        Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
+
+                                mRecy.setAdapter(mAdapter);
+                                //还可以更新其他的控件
+                                mAdapter = new ChatAdapter(_mActivity);
+                                mAdapter.setDatas(chatList);
+                                /*   JSONObject obj = new JSONObject().fromObject(sd);*/
+                            }
+                        });
+                    }
+                });
     }
 }

@@ -40,8 +40,6 @@ public class updateAccountActivity extends AppCompatActivity {
     public  String oldAccount;
     public  String oldBetAccount;
     public  String oldDomain;
-
-
     private Button update;
 
     @Override
