@@ -38,23 +38,15 @@ import okhttp3.Response;
 
 public class loginActivity extends SupportActivity  implements View.OnClickListener{
 
-   /* @BindView(R.id.part_second)
-    LinearLayout l2;
-    @BindView(R.id.part_third)
-    LinearLayout l3;*/
-
     private Handler handler2 = new Handler();
-private  static final String TAG = "loginActivity";
-
+    private  static final String TAG = "loginActivity";
     private EditText mUsername;
     private EditText mPassWord;
-     private Button mButton;
-     private ImageView iv_see_password;
-
+    private Button mButton;
+    private ImageView iv_see_password;
     private String account ;
     private String password;
     private int status;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +58,7 @@ private  static final String TAG = "loginActivity";
     }
 
     public void initView(){
-         mButton=(Button)findViewById(R.id.sign_login);
+        mButton=(Button)findViewById(R.id.sign_login);
         mUsername=(EditText)findViewById(R.id.admin);
         mPassWord=(EditText)findViewById(R.id.login_password);
         iv_see_password = (ImageView)findViewById(R.id.iv_see_password);
@@ -87,8 +79,10 @@ private  static final String TAG = "loginActivity";
         }
 
     }
+
+
     public void getdata(){
-        String url = "http://47.106.177.111/login.php";
+        String url = "http://119.23.45.41:8080/login.php";
         OkHttpUtils
                 .get()
                 .url(url)
@@ -121,13 +115,13 @@ private  static final String TAG = "loginActivity";
                 });
     }
 
+
     public void login(){
 
 
    mButton.setOnClickListener(new View.OnClickListener() {
        @Override
        public void onClick(View v) {
-
           account= mUsername.getText().toString();
           password = mPassWord.getText().toString();
            SharedPreferences share = loginActivity.this.getSharedPreferences("account", MODE_PRIVATE);
@@ -138,7 +132,7 @@ private  static final String TAG = "loginActivity";
            getdata();
        }
    });
-    }
+   }
 
 
 public  void  keepLoginStatus(int status){
@@ -162,7 +156,7 @@ password = mPassWord.getText().toString();
     try {
         Request request = new Request.Builder()
                     /*192.168.43.92*/
-                .url("http://47.106.177.111/login.php")//请求接口。如果需要传参拼接到接口后面
+                .url("http://119.23.45.41:8080/login.php")//请求接口。如果需要传参拼接到接口后面
                 .post(requestBody)
                 .build();//创建Request 对象
 
@@ -185,14 +179,12 @@ password = mPassWord.getText().toString();
     }
 }
 
-
     @Override
     public void onClick(View view) {
 switch (view.getId()){
     case R.id.iv_see_password:
         setPasswordVisibility();    //改变图片并设置输入框的文本可见或不可见
         break;
-
 }
     }
 }

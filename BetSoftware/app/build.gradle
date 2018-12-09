@@ -9,7 +9,7 @@ android {
     defaultConfig {
 
         applicationId "com.cqut.faymong.simpleqq"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -58,4 +58,5 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:2.0.1'
     implementation 'com.orhanobut:logger:2.2.0'
     compile 'com.github.huangyanbin:SmartTable:2.2.0'
+    implementation 'com.github.GrenderG:Toasty:1.3.0'
 }

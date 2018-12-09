@@ -163,7 +163,7 @@ public class InformationDisplayActivity extends SupportActivity implements Swipe
 
         SharedPreferences share = InformationDisplayActivity.this.getSharedPreferences("account",MODE_PRIVATE);
         loginAccount = share.getString("account","account");
-        String url = "http://47.106.177.111/get_bet_account.php";
+        String url = "http://119.23.45.41:8080/get_bet_account.php";
         OkHttpUtils
                 .get()
                 .url(url)
@@ -196,7 +196,7 @@ public class InformationDisplayActivity extends SupportActivity implements Swipe
     }
     public void deletedata() {
 
-        String url = "http://47.106.177.111/remove_bet_account.php";
+        String url = "http://119.23.45.41:8080/remove_bet_account.php";
         OkHttpUtils
                 .get()
                 .url(url)

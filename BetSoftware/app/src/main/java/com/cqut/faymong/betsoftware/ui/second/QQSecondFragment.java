@@ -66,6 +66,7 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
      View view = inflater.inflate(R.layout.bettedteam, container, false);
      initView(view);
      getdata();
+/*     getPenaltykickData();*/
      return view;
     }
 
@@ -140,12 +141,14 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
         }
         return  msgList;
     }
+
+
     public void getdata() {
-        String url = "http://47.106.177.111/get_bet_record.php";
+        String url = "http://119.23.45.41:8080/get_bet_record.php";
         OkHttpUtils
                 .get()
                 .url(url)
-                .addParams("account", "a123")
+                .addParams("account", "888")
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -161,6 +164,62 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
 
              /*        jsonObject =  parseJSONWithJSONObject(response);*/
                   JSONArray      jsonArray =  parseJSONWithJSONObject(response);
+
+                      list = gson.fromJson(jsonArray.toString(), new TypeToken<List<Map<String, Object>>>() {
+                      }.getType());
+                        if(list.size()!=0) {
+                      Log.d(TAG, "onStringAvailable: " + list);
+                      mRecy.post(new Runnable() {
+                          @Override
+                          public void run() {
+                              List<Chat> chatList = null;
+                              try {
+                                  chatList = initDatas();
+                                  if(chatList!=null)
+                                      Toast.makeText(getActivity(),  "刷新成功", Toast.LENGTH_SHORT).show();
+                                  else
+                                      Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
+                              } catch (JSONException e) {
+                                  e.printStackTrace();
+                              }
+                              mRecy.setAdapter(mAdapter);
+                              //还可以更新其他的控件
+                              mAdapter = new ChatAdapter(_mActivity);
+                              mAdapter.setDatas(chatList);
+                              /*   JSONObject obj = new JSONObject().fromObject(sd);*/
+
+                          }
+                      });
+                  }
+
+                    }
+
+
+                });
+    }
+
+
+
+    public void getPenaltykickData(){
+        String url = "http://119.23.45.41:8080/penalty";
+        OkHttpUtils
+                .get()
+                .url(url)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Toast.makeText(getActivity(), e.toString() + "error", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Logger.addLogAdapter(new AndroidLogAdapter());
+                        Logger.json(response);
+                        Gson gson = new Gson();
+
+                        /*        jsonObject =  parseJSONWithJSONObject(response);*/
+                        JSONArray      jsonArray =  parseJSONWithJSONObject(response);
                         list = gson.fromJson(jsonArray.toString(), new TypeToken<List<Map<String, Object>>>() {
                         }.getType());
 
@@ -178,7 +237,7 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
                                 //还可以更新其他的控件
                                 mAdapter = new ChatAdapter(_mActivity);
                                 mAdapter.setDatas(chatList);
-                                         /*   JSONObject obj = new JSONObject().fromObject(sd);*/
+                                /*   JSONObject obj = new JSONObject().fromObject(sd);*/
 
                             }
                         });
@@ -187,6 +246,7 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
 
 
                 });
+
     }
     private  JSONArray parseJSONWithJSONObject(String jsonData){
         JSONArray jsonArray = null;
@@ -208,9 +268,63 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
             @Override
             public void run() {
            getdata();
-                mRefreshLayout.setRefreshing(false);
+//                refreshData();
+                    mRefreshLayout.setRefreshing(false);
             }
         }, 2500);
 
+    }
+
+    public void refreshData(){
+        String url = "http://119.23.45.41:8080/get_bet_record.php";
+        OkHttpUtils
+                .get()
+                .url(url)
+                .addParams("account", "888")
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        if(e.toString().equals("java.net.ConnectException: Failed to connect to /119.23.45.41:8000"))
+                            Toast.makeText(getActivity(), "请检查网络是否连接", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onResponse(String res, int id) {
+                        Logger.addLogAdapter(new AndroidLogAdapter());
+                        Logger.json(res);
+                        Gson gson = new Gson();
+                        /*        jsonObject =  parseJSONWithJSONObject(response);*/
+                        JSONArray      jsonArray =  parseJSONWithJSONObject(res);
+                        if(list.size()!=0) {
+                            list = gson.fromJson(jsonArray.toString(), new TypeToken<List<Map<String, Object>>>() {
+                            }.getType());
+
+                            Log.d(TAG, "onStringAvailable: " + list);
+                            mRecy.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    List<Chat> chatList = null;
+
+                                    try {
+                                        chatList = initDatas();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    if (chatList != null)
+                                        Toast.makeText(getActivity(), "刷新成功", Toast.LENGTH_SHORT).show();
+                                    else
+                                        Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
+
+                                    mRecy.setAdapter(mAdapter);
+                                    //还可以更新其他的控件
+                                    mAdapter = new ChatAdapter(_mActivity);
+                                    mAdapter.setDatas(chatList);
+                                    /*   JSONObject obj = new JSONObject().fromObject(sd);*/
+                                }
+                            });
+                        }
+                    }
+                });
     }
 }

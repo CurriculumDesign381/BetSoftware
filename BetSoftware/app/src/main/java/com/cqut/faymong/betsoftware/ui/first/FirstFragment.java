@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -84,17 +85,11 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-   /*     refreshddd();*/
+
         View view = inflater.inflate(R.layout.qq_tab_first, container, false);
-        getWebSocketData();
+
         initView(view);
-       /* mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
-        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshddd();
-            }
-        });*/
+
 
         return view;
     }
@@ -124,6 +119,7 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
                 outRect.set(0, 0, 0, space);
             }
         });
+
         mAdapter = new ChatAdapter(_mActivity);
         mRecy.setAdapter(mAdapter);
         List<Chat> chatList = initDatas();
@@ -144,20 +140,15 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
             }
         });
 
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+
+        mRefreshLayout.postDelayed(new Runnable() {
             @Override
-            public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
-                // 因为启动的MsgFragment是MainFragment的兄弟Fragment,所以需要MainFragment.start()
-
-                // 也可以像使用getParentFragment()的方式,拿到父Fragment来操作 或者使用 EventBusActivityScope
-                Chat chat = mAdapter.getMsg(position);
-                eventid = chat.evenid;
-                keepLoginStatus(eventid);
-                ((MainFragment) getParentFragment()).startBrotherFragment(footballmessageFragment.newInstance(mAdapter.getMsg(position)));
-
-
+            public void run() {
+                refreshData();
+                mRefreshLayout.setRefreshing(false);
             }
-        });
+        }, 2500);
+
     }
 
     public  void  keepLoginStatus(String  eventid){
@@ -171,7 +162,7 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
          result =0;
         try {
             AsyncHttpClient.getDefaultInstance().websocket(
-                    "ws://47.106.177.111:9000",// webSocket地址
+                    "ws://119.23.45.41:9000",// webSocket地址
                     "9000",// 端口
                     new AsyncHttpClient.WebSocketConnectCallback() {
                         @Override
@@ -200,11 +191,11 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
                                         mRecy.post(new Runnable() {
                                             @Override
                                             public void run() {
-                                                List<Chat> chatList = initDatas();
-                                                mRecy.setAdapter(mAdapter);
-                                                //还可以更新其他的控件
-                                                chatList = initDatas();
-                                                mAdapter.setDatas(chatList);
+                                                    List<Chat> chatList = initDatas();
+                                                    mRecy.setAdapter(mAdapter);
+                                                    //还可以更新其他的控件
+                                                    chatList = initDatas();
+                                                    mAdapter.setDatas(chatList);
                                          /*   JSONObject obj = new JSONObject().fromObject(sd);*/
                                             }
                                         });
@@ -246,6 +237,7 @@ return result;
         }
         return jsonArray;
     }
+
   /*  private List<Chat> initDatas() {
         List<Chat> msgList = new ArrayList<>();
         String[] name = new String[]{"印果阿超", "印果阿超", "国际友谊", "俄甲", "伊朗超"};
@@ -288,10 +280,6 @@ return result;
                 mRefreshLayout.setRefreshing(false);
             }
         }, 2500);
-      /*  if(result==1)
-            Toast.makeText(getActivity(),"刷新成功" ,Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(getActivity(),"亲，没有网络了" ,Toast.LENGTH_SHORT).show();*/
     }
 
 
@@ -320,9 +308,54 @@ return result;
         EventBusActivityScope.getDefault(_mActivity).unregister(this);
     }
 
+public void getdata(){
+    String url = "http://119.23.45.41:8000/game";
+    OkHttpUtils
+            .get()
+            .url(url)
+            .build()
+            .execute(new StringCallback() {
+                @Override
+                public void onError(Call call, Exception e, int id) {
+                    if(e.toString().equals("java.net.ConnectException: Failed to connect to /119.23.45.41:8000"))
+                        Toast.makeText(getActivity(), "请检查网络是否连接", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onResponse(String res, int id) {
+                    Logger.addLogAdapter(new AndroidLogAdapter());
+                    Logger.json(res);
+                    Gson gson = new Gson();
+                    /*        jsonObject =  parseJSONWithJSONObject(response);*/
+                    JSONArray      jsonArray =  parseJSONWithJSONObject(res);
+                    list = gson.fromJson(jsonArray.toString(), new TypeToken<List<Map<String, Object>>>() {
+                    }.getType());
+
+                    Log.d(TAG, "onStringAvailable: "+list);
+                    mRecy.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            List<Chat> chatList = null;
+
+                            chatList = initDatas();
+//                            if(chatList!=null)
+//                                Toast.makeText(getActivity(),  "刷新成功", Toast.LENGTH_SHORT).show();
+//                            else
+//                                Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
+
+                            mRecy.setAdapter(mAdapter);
+                            //还可以更新其他的控件
+                            mAdapter = new ChatAdapter(_mActivity);
+                            mAdapter.setDatas(chatList);
+                            /*   JSONObject obj = new JSONObject().fromObject(sd);*/
+                        }
+                    });
+                }
+            });
+}
 
     public void refreshData(){
-        String url = "http://47.106.177.111:8000/game";
+        String url = "http://119.23.45.41:8000/game";
         OkHttpUtils
                 .get()
                 .url(url)
@@ -330,7 +363,7 @@ return result;
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        if(e.toString().equals("java.net.ConnectException: Failed to connect to /47.106.177.111:8000"))
+                        if(e.toString().equals("java.net.ConnectException: Failed to connect to /119.23.45.41:8000"))
                         Toast.makeText(getActivity(), "请检查网络是否连接", Toast.LENGTH_SHORT).show();
                     }
 
@@ -356,11 +389,27 @@ return result;
                                     else
                                         Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
 
-                                mRecy.setAdapter(mAdapter);
+
                                 //还可以更新其他的控件
                                 mAdapter = new ChatAdapter(_mActivity);
+                                mRecy.setAdapter(mAdapter);
                                 mAdapter.setDatas(chatList);
                                 /*   JSONObject obj = new JSONObject().fromObject(sd);*/
+
+                                mAdapter.setOnItemClickListener(new OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
+                                        // 因为启动的MsgFragment是MainFragment的兄弟Fragment,所以需要MainFragment.start()
+
+                                        // 也可以像使用getParentFragment()的方式,拿到父Fragment来操作 或者使用 EventBusActivityScope
+                                        Chat chat = mAdapter.getMsg(position);
+                                        eventid = chat.evenid;
+                                        keepLoginStatus(eventid);
+                                        ((MainFragment) getParentFragment()).startBrotherFragment(footballmessageFragment.newInstance(mAdapter.getMsg(position)));
+
+
+                                    }
+                                });
                             }
                         });
                     }

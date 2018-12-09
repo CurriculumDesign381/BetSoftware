@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.cqut.faymong.betsoftware.R;
@@ -67,6 +68,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.VH> {
         holder.tvTime.setText(item.score);
         holder.hometeam.setText(item.hometeam);
         holder.awayteam.setText(item.awayteam);
+       /* @Override
+        public void onClick(View arg0) {
+            // 点击事件
+            Toast.makeText(mContext, postion + "", 1000).show();
+        }*/
+
+
 
     }
 

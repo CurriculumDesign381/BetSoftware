@@ -21,8 +21,9 @@ import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * Created by YoKeyword on 16/6/30.
- */
+ *  */
 public class MainFragment extends SupportFragment {
+
     private static final int REQ_MSG = 10;
     public static final int FIRST = 0;
     public static final int SECOND = 1;
@@ -74,6 +75,8 @@ public class MainFragment extends SupportFragment {
 
         }
     }
+
+
 
     private void initView(View view) {
         mBottomBar = (BottomBar) view.findViewById(R.id.bottomBar);

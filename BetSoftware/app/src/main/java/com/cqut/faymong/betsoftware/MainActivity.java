@@ -29,7 +29,7 @@ import okhttp3.Call;
 
 public class MainActivity extends SupportActivity  implements BaseMainFragment.OnBackToFirstListener{
 
-      String  ddd="111";
+    String  ddd="111";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class MainActivity extends SupportActivity  implements BaseMainFragment.O
 
     public void getWebSocketData(){
         AsyncHttpClient.getDefaultInstance().websocket(
-                "ws://47.106.177.111:9000",// webSocket地址
+                "ws://119.23.45.41:9000",// webSocket地址
                 "9000",// 端口
                 new AsyncHttpClient.WebSocketConnectCallback() {
                     @Override
@@ -94,7 +94,7 @@ public class MainActivity extends SupportActivity  implements BaseMainFragment.O
     //记录用户首次点击返回键的时间
     private long firstTime = 0;
 
-   /* *//**
+    /* *//**
      * 第一种解决办法 通过监听keyUp
      * @param keyCode
      * @param event

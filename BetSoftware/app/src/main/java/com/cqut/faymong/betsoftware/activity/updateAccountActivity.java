@@ -102,7 +102,7 @@ public class updateAccountActivity extends AppCompatActivity {
     public void getdata() {
 
 
-        String url = "http://47.106.177.111/alter_bet_account.php";
+        String url = "http://119.23.45.41:8080/alter_bet_account.php";
         OkHttpUtils
                 .get()
                 .url(url)

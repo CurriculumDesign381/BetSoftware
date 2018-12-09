@@ -29,10 +29,8 @@
         android:layout_above="@+id/img_avatar"
 
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="-3dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"
         android:text="泰国大学联赛"
         android:textColor="@android:color/black"
         android:textSize="10sp" />

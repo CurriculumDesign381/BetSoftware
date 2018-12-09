@@ -14,13 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cqut.faymong.betsoftware.R;
+import com.cqut.faymong.betsoftware.adapter.ChatAdapter;
 import com.cqut.faymong.betsoftware.adapter.FootballMessageAdapter;
 import com.cqut.faymong.betsoftware.base.BaseBackFragment;
 import com.cqut.faymong.betsoftware.base.BaseMainFragment;
 import com.cqut.faymong.betsoftware.entity.Chat;
 import com.cqut.faymong.betsoftware.entity.CompetitionInfor;
+import com.cqut.faymong.betsoftware.listener.OnItemClickListener;
+import com.cqut.faymong.betsoftware.ui.MainFragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.koushikdutta.async.ByteBufferList;
@@ -28,6 +32,10 @@ import com.koushikdutta.async.DataEmitter;
 import com.koushikdutta.async.callback.DataCallback;
 import com.koushikdutta.async.http.AsyncHttpClient;
 import com.koushikdutta.async.http.WebSocket;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
+import okhttp3.Call;
 
 import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
@@ -98,7 +107,14 @@ public class footballmessageFragment extends BaseBackFragment implements SwipeRe
         mRecy.setHasFixedSize(true);
         fAdapter = new FootballMessageAdapter(_mActivity);
         mRecy.setAdapter(fAdapter);
-    getWebSocketData();
+//    getWebSocketData();
+        mRefreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+               getFootballDetailMessage();
+                mRefreshLayout.setRefreshing(false);
+            }
+        }, 2500);
         return view;
     }
     @Override
@@ -127,7 +143,7 @@ public class footballmessageFragment extends BaseBackFragment implements SwipeRe
         try {
             //gameDetail:eventid
             AsyncHttpClient.getDefaultInstance().websocket(
-                    "ws://47.106.177.111:9000",// webSocket地址
+                    "ws://119.23.45.41:9000",// webSocket地址
                     "9000",// 端口
                     new AsyncHttpClient.WebSocketConnectCallback() {
                         @Override
@@ -182,6 +198,56 @@ public class footballmessageFragment extends BaseBackFragment implements SwipeRe
             Log.d(TAG, "getWebSocketData: error");
         }
     }
+
+    public void  getFootballDetailMessage(){
+        String url = "http://119.23.45.41:8000/gameDetail";
+        OkHttpUtils
+                .get()
+                .url(url)
+                .addParams("eventid", eventID)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        if(e.toString().equals("java.net.ConnectException: Failed to connect to /119.23.45.41:8000"))
+                            Toast.makeText(getActivity(), "请检查网络是否连接", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onResponse(String res, int id) {
+                        Logger.addLogAdapter(new AndroidLogAdapter());
+                        Logger.json(res);
+                        Gson gson = new Gson();
+                        /*        jsonObject =  parseJSONWithJSONObject(response);*/
+
+
+                        Log.d(TAG, "onStringAvailable: "+list);
+
+                        jsonArray =  parseJSONWithJSONObject(res);
+                        if(jsonArray!=null&&!jsonArray.equals("{}"))
+                            Toast.makeText(getActivity(),  "刷新成功", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
+                        mRecy.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                fAdapter.clear();
+                                for(int i=0;i<jsonArray.length();i++){
+
+                                    try{
+                                        mRecy.setAdapter(fAdapter);
+                                        fAdapter.addMsg(new CompetitionInfor(jsonArray.get(i).toString()));
+                                    }
+                                    catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+
+    }
     private JSONArray parseJSONWithJSONObject(String jsonData){
         JSONArray jsonArray = null;
         try{
@@ -209,7 +275,8 @@ public class footballmessageFragment extends BaseBackFragment implements SwipeRe
         mRefreshLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
-                getWebSocketData();
+//                getWebSocketData();
+                getFootballDetailMessage();
                 mRefreshLayout.setRefreshing(false);
             }
         }, 2500);
