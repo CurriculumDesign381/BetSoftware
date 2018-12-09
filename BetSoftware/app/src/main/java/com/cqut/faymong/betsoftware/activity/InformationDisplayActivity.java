@@ -32,6 +32,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import es.dmoral.toasty.Toasty;
 import me.yokeyword.fragmentation.SupportActivity;
 import okhttp3.Call;
 
@@ -61,8 +62,6 @@ public class InformationDisplayActivity extends SupportActivity implements Swipe
         createTable();
         getdata();
     }
-
-
 
     public void createTable(){
         table = (SmartTable<bet>)findViewById(R.id.table);
@@ -157,8 +156,6 @@ public class InformationDisplayActivity extends SupportActivity implements Swipe
 
     }
 
-
-
     public void getdata() {
 
         SharedPreferences share = InformationDisplayActivity.this.getSharedPreferences("account",MODE_PRIVATE);
@@ -182,6 +179,9 @@ public class InformationDisplayActivity extends SupportActivity implements Swipe
                         JSONArray jsonArray = parseJSONWithJSONObject(response);
                         list = gson.fromJson(jsonArray.toString(), new TypeToken<List<Map<String, Object>>>() {
                         }.getType());
+                        if(list.size()!=0){
+                            Toasty.success(InformationDisplayActivity.this, "刷新成功", Toast.LENGTH_SHORT, true).show();
+                        }
                      /*   if(list.size()!=0)
                         Toast.makeText(InformationDisplayActivity.this,list.toString(),Toast.LENGTH_SHORT).show();*/
                         List<bet> codeList = new ArrayList<bet>();
@@ -194,6 +194,7 @@ public class InformationDisplayActivity extends SupportActivity implements Swipe
                     }
                 });
     }
+
     public void deletedata() {
 
         String url = "http://119.23.45.41:8080/remove_bet_account.php";
@@ -207,13 +208,16 @@ public class InformationDisplayActivity extends SupportActivity implements Swipe
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Toast.makeText(InformationDisplayActivity.this, e.toString() + "error", Toast.LENGTH_SHORT).show();
+                        Toasty.error(InformationDisplayActivity.this, "请检查网络", Toast.LENGTH_SHORT, true).show();
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
                     /*    Toast.makeText(InformationDisplayActivity.this, response.toString(), Toast.LENGTH_SHORT).show();*/
-                        Toast.makeText(InformationDisplayActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
+                        if(Integer.parseInt(response)==1)
+                        Toasty.success(InformationDisplayActivity.this, "删除成功", Toast.LENGTH_SHORT, true).show();
+                        else
+                            Toasty.info(InformationDisplayActivity.this, "删除失败", Toast.LENGTH_SHORT, true).show();
                         List<bet> codeList = new ArrayList<bet>();
                         for (int i =0;i<list.size();i++){
                             codeList.add(new bet(list.get(i).get("account").toString(),list.get(i).get("domain").toString(),list.get(i).get("betamount").toString(),false,false));

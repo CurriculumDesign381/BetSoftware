@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
 import okhttp3.Call;
 
 public class updateAccountActivity extends AppCompatActivity {
@@ -57,15 +58,11 @@ public class updateAccountActivity extends AppCompatActivity {
         oldAccount = accountdata;
         oldBetAccount = betaccountdata;
         oldDomain = domaindata;
-
         account.setText(accountdata);
         betaccount.setText(betaccountdata);
         betpassword.setText(betpassworddata);
         domain.setText(domaindata);
         betamount.setText(betamountdata);
-
-
-
         onclick();
 
     }
@@ -118,16 +115,16 @@ public class updateAccountActivity extends AppCompatActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Toast.makeText(updateAccountActivity.this, e.toString() + "error", Toast.LENGTH_SHORT).show();
+                        Toasty.error(updateAccountActivity.this, "请检查网络", Toast.LENGTH_SHORT, true).show();
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Toast.makeText(updateAccountActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+
                         if(Integer.parseInt(response)==1)
-                        Toast.makeText(updateAccountActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+                            Toasty.success(updateAccountActivity.this, "修改成功", Toast.LENGTH_SHORT, true).show();
                         else
-                            Toast.makeText(updateAccountActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+                            Toasty.info(updateAccountActivity.this, "修改失败", Toast.LENGTH_SHORT, true).show();
 
 
                     }

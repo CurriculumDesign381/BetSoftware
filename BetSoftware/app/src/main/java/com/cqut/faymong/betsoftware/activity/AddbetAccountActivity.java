@@ -23,6 +23,7 @@ import org.json.JSONException;
 
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import okhttp3.Call;
 
 import static android.content.ContentValues.TAG;
@@ -66,7 +67,6 @@ public class AddbetAccountActivity extends AppCompatActivity {
 
                 switch (v.getId()) {
                     case R.id.addaccount:
-                        Toast.makeText(AddbetAccountActivity.this, "您点击添加button"+account, Toast.LENGTH_SHORT).show();
                         getdata();
                         break;
                     default:
@@ -89,7 +89,6 @@ public class AddbetAccountActivity extends AppCompatActivity {
     }
 
 
-
     public void getdata() {
         String url = "http://119.23.45.41:8080/add_bet_account.php";
         OkHttpUtils
@@ -104,12 +103,16 @@ public class AddbetAccountActivity extends AppCompatActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Toast.makeText(AddbetAccountActivity.this, e.toString() + "error", Toast.LENGTH_SHORT).show();
+                        Toasty.error(AddbetAccountActivity.this, "请检查网络", Toast.LENGTH_SHORT, true).show();
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
-                        Toast.makeText(AddbetAccountActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+
+                        if(Integer.parseInt(response)==1)
+                            Toasty.success(AddbetAccountActivity.this, "添加成功", Toast.LENGTH_SHORT, true).show();
+                         else
+                            Toasty.info(AddbetAccountActivity.this, "添加失败", Toast.LENGTH_SHORT, true).show();
                     }
                 });
     }
