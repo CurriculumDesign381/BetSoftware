@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import okhttp3.Call;
 
@@ -65,11 +66,10 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
      View view = inflater.inflate(R.layout.bettedteam, container, false);
      initView(view);
-     getdata();
+
 /*     getPenaltykickData();*/
      return view;
     }
-
     private void initView(View view) {
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout1);
@@ -77,7 +77,6 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
 /*        EventBusActivityScope.getDefault(_mActivity).register(this);*/
         mToolbar.setTitle(R.string.betteam);
     }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -85,7 +84,6 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
             loadRootFragment(R.id.fl_second_container, ViewPagerFragment.newInstance());
         }*/
     }
-
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
@@ -110,7 +108,6 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
             e.printStackTrace();
         }
 
-
         mAdapter.setDatas(chatList);
 
         mRecy.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -125,6 +122,15 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
                 }
             }
         });
+
+        mRefreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getdata();
+//                refreshData();
+                mRefreshLayout.setRefreshing(false);
+            }
+        }, 250);
     }
 
     public List<Chat> initDatas() throws JSONException {
@@ -142,7 +148,6 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
         return  msgList;
     }
 
-
     public void getdata() {
         String url = "http://119.23.45.41:8080/get_bet_record.php";
         OkHttpUtils
@@ -153,7 +158,7 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Toast.makeText(getActivity(), e.toString() + "error", Toast.LENGTH_SHORT).show();
+                        Toasty.error(getActivity(), "请检查网络是否连接", Toast.LENGTH_SHORT, true).show();
                     }
 
                     @Override
@@ -164,9 +169,12 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
 
              /*        jsonObject =  parseJSONWithJSONObject(response);*/
                   JSONArray      jsonArray =  parseJSONWithJSONObject(response);
+                  Logger.d("list1"+list);
+                     list.clear();
 
                       list = gson.fromJson(jsonArray.toString(), new TypeToken<List<Map<String, Object>>>() {
                       }.getType());
+                        Logger.d("list2"+list);
                         if(list.size()!=0) {
                       Log.d(TAG, "onStringAvailable: " + list);
                       mRecy.post(new Runnable() {
@@ -176,16 +184,16 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
                               try {
                                   chatList = initDatas();
                                   if(chatList!=null)
-                                      Toast.makeText(getActivity(),  "刷新成功", Toast.LENGTH_SHORT).show();
+                                      Toasty.success(getActivity(), "刷新成功", Toast.LENGTH_SHORT, true).show();
                                   else
-                                      Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
+                                      Toasty.info(getActivity(), "刷新失败", Toast.LENGTH_SHORT, true).show();
                               } catch (JSONException e) {
                                   e.printStackTrace();
                               }
-                              mRecy.setAdapter(mAdapter);
-                              //还可以更新其他的控件
                               mAdapter = new ChatAdapter(_mActivity);
                               mAdapter.setDatas(chatList);
+                              mRecy.setAdapter(mAdapter);
+
                               /*   JSONObject obj = new JSONObject().fromObject(sd);*/
 
                           }
@@ -197,8 +205,6 @@ public class QQSecondFragment extends BaseMainFragment implements SwipeRefreshLa
 
                 });
     }
-
-
 
     public void getPenaltykickData(){
         String url = "http://119.23.45.41:8080/penalty";

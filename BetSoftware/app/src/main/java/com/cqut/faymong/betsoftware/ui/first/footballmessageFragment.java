@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 import okhttp3.Call;
 
@@ -114,29 +115,12 @@ public class footballmessageFragment extends BaseBackFragment implements SwipeRe
                getFootballDetailMessage();
                 mRefreshLayout.setRefreshing(false);
             }
-        }, 2500);
+        }, 250);
         return view;
     }
     @Override
     public void onEnterAnimationEnd(Bundle savedInstanceState) {
         super.onEnterAnimationEnd(savedInstanceState);
-
-        // 入场动画结束后执行  优化,防动画卡顿
-     /*   _mActivity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        mRecy.setLayoutManager(new LinearLayoutManager(_mActivity));
-        mRecy.setHasFixedSize(true);
-        fAdapter = new FootballMessageAdapter(_mActivity);
-        mRecy.setAdapter(fAdapter);*/
-        /*for(int i=0;i<jsonArray.length();i++){
-            try{
-
-                fAdapter.addMsg(new CompetitionInfor(jsonArray.get(i).toString()));
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-
-        }*/
     }
 
     public void getWebSocketData(){
@@ -210,7 +194,7 @@ public class footballmessageFragment extends BaseBackFragment implements SwipeRe
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         if(e.toString().equals("java.net.ConnectException: Failed to connect to /119.23.45.41:8000"))
-                            Toast.makeText(getActivity(), "请检查网络是否连接", Toast.LENGTH_SHORT).show();
+                            Toasty.error(getActivity(), "请检查网络是否连接", Toast.LENGTH_SHORT, true).show();
                     }
 
                     @Override
@@ -225,9 +209,9 @@ public class footballmessageFragment extends BaseBackFragment implements SwipeRe
 
                         jsonArray =  parseJSONWithJSONObject(res);
                         if(jsonArray!=null&&!jsonArray.equals("{}"))
-                            Toast.makeText(getActivity(),  "刷新成功", Toast.LENGTH_SHORT).show();
+                            Toasty.success(getActivity(), "刷新成功", Toast.LENGTH_SHORT, true).show();
                         else
-                            Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
+                            Toasty.info(getActivity(), "刷新失败", Toast.LENGTH_SHORT, true).show();
                         mRecy.post(new Runnable() {
                             @Override
                             public void run() {

@@ -52,6 +52,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import okhttp3.Call;
 
@@ -147,7 +148,7 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
                 refreshData();
                 mRefreshLayout.setRefreshing(false);
             }
-        }, 2500);
+        }, 250);
 
     }
 
@@ -238,21 +239,7 @@ return result;
         return jsonArray;
     }
 
-  /*  private List<Chat> initDatas() {
-        List<Chat> msgList = new ArrayList<>();
-        String[] name = new String[]{"印果阿超", "印果阿超", "国际友谊", "俄甲", "伊朗超"};
-        String[] chats = new String[]{"19：00", "19：30", "20：00", "20：30", "20：30"};
-        String[] scores = new String[]{"0-1", "0-0", "1-1", "3-4", "5-5"};
-        for (int i = 0; i < 15; i++) {
-            int index = (int) (Math.random() * 5);
-            Chat chat = new Chat();
-            chat.name = name[index];
-            chat.message = chats[index];
-            chat.score = scores[index];
-            msgList.add(chat);
-        }
-        return msgList;
-    }*/
+
 
     public List<Chat> initDatas(){
         List<Chat> msgList = new ArrayList<>();
@@ -364,7 +351,7 @@ public void getdata(){
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         if(e.toString().equals("java.net.ConnectException: Failed to connect to /119.23.45.41:8000"))
-                        Toast.makeText(getActivity(), "请检查网络是否连接", Toast.LENGTH_SHORT).show();
+                            Toasty.error(getActivity(), "请检查网络是否连接", Toast.LENGTH_SHORT, true).show();
                     }
 
                     @Override
@@ -382,18 +369,18 @@ public void getdata(){
                             @Override
                             public void run() {
                                 List<Chat> chatList = null;
-
                                     chatList = initDatas();
+
                                     if(chatList!=null)
-                                        Toast.makeText(getActivity(),  "刷新成功", Toast.LENGTH_SHORT).show();
+                                        Toasty.success(getActivity(), "刷新成功", Toast.LENGTH_SHORT, true).show();
                                     else
-                                        Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
+                                        Toasty.info(getActivity(), "刷新失败", Toast.LENGTH_SHORT, true).show();
 
 
                                 //还可以更新其他的控件
-                                mAdapter = new ChatAdapter(_mActivity);
+                                    mAdapter = new ChatAdapter(_mActivity);
+                                    mAdapter.setDatas(chatList);
                                 mRecy.setAdapter(mAdapter);
-                                mAdapter.setDatas(chatList);
                                 /*   JSONObject obj = new JSONObject().fromObject(sd);*/
 
                                 mAdapter.setOnItemClickListener(new OnItemClickListener() {

@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.SupportFragment;
 import okhttp3.Call;
@@ -93,7 +94,7 @@ public class loginActivity extends SupportActivity  implements View.OnClickListe
                 {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Toast.makeText(loginActivity.this,"请检查网络" ,Toast.LENGTH_SHORT).show();
+                        Toasty.error(loginActivity.this, "请检查密码", Toast.LENGTH_SHORT, true).show();
                     }
 
                     @Override
@@ -101,7 +102,7 @@ public class loginActivity extends SupportActivity  implements View.OnClickListe
                         status = Integer.parseInt(response);
                         if(status==1){
                             Log.d(TAG, "success: "+mUsername.getText().toString());
-                            Toast.makeText(loginActivity.this,  "登录成功", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(loginActivity.this,  "登录成功", Toast.LENGTH_SHORT).show();
                             status = 1;
                             keepLoginStatus(status);
                             Intent intent = new Intent(loginActivity.this,MainActivity.class);
@@ -109,7 +110,7 @@ public class loginActivity extends SupportActivity  implements View.OnClickListe
                         }
                         else {
                             Log.d(TAG, "mUsername: "+mUsername.getText().toString());
-                            Toast.makeText(loginActivity.this, "密码或账户名错误", Toast.LENGTH_SHORT).show();
+                            Toasty.info(loginActivity.this, "用户名或密码错误", Toast.LENGTH_SHORT, true).show();
                         }
                     }
                 });
