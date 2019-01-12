@@ -10,13 +10,15 @@ public class bet {
     public String betamount;
     public boolean update;
     public boolean delete;
+    public String state;
 
-    public bet(String account, String domain, String betamount, boolean update,boolean delete) {
+    public bet(String account, String domain, String betamount, boolean update,boolean delete,String state) {
         this.account = account;
         this.domain = domain;
         this.betamount = betamount;
         this.update = update;
         this.delete = delete;
+        this.state = state;
     }
 
     public void setAccount(String account) {
@@ -41,5 +43,13 @@ public class bet {
 
     public String getBetamount() {
         return betamount;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }

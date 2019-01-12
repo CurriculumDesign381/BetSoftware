@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.cqut.faymong.betsoftware.R;
 import com.cqut.faymong.betsoftware.entity.Chat;
 import com.cqut.faymong.betsoftware.entity.CompetitionInfor;
+import com.cqut.faymong.betsoftware.entity.shedule;
 import com.cqut.faymong.betsoftware.listener.OnItemClickListener;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class BetteddataAdapter  extends RecyclerView.Adapter<BetteddataAdapter.V
     private LayoutInflater mInflater;
     private Context mContext;
 
-    private List<CompetitionInfor> mItems = new ArrayList<>();
+    private List<shedule> mItems = new ArrayList<>();
 
     private OnItemClickListener mClickListener;
 
@@ -33,17 +34,17 @@ public class BetteddataAdapter  extends RecyclerView.Adapter<BetteddataAdapter.V
         mInflater = LayoutInflater.from(context);
     }
 
-    public void setDatas(List<CompetitionInfor> beans) {
+    public void setDatas(List<shedule> beans) {
         mItems.clear();
         mItems.addAll(beans);
         notifyDataSetChanged();
     }
-    public void addMsg(CompetitionInfor bean) {
+    public void addMsg(shedule bean) {
         mItems.add(bean);
         notifyItemInserted(mItems.size() - 1);
     }
 
-    public void refreshMsg(Chat bean) {
+    public void refreshMsg(shedule bean) {
         int index = mItems.indexOf(bean);
         if (index < 0) return;
 
@@ -52,7 +53,7 @@ public class BetteddataAdapter  extends RecyclerView.Adapter<BetteddataAdapter.V
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.football_message, parent, false);
+        View view = mInflater.inflate(R.layout.fourth_shedulelist, parent, false);
         final VH holder = new VH(view);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,8 +68,11 @@ public class BetteddataAdapter  extends RecyclerView.Adapter<BetteddataAdapter.V
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
-        CompetitionInfor item = mItems.get(position);
-        holder.footballmessage.setText(item.message);
+        shedule item = mItems.get(position);
+        holder.date.setText(item.shedule_date);
+        holder.time.setText(item.shedule_time);
+        holder.vs.setText(item.shedule_vs);
+
 
 
 
@@ -87,12 +91,14 @@ public class BetteddataAdapter  extends RecyclerView.Adapter<BetteddataAdapter.V
 
     class VH extends RecyclerView.ViewHolder {
 
-        private TextView footballmessage;
+        private TextView time,date,vs;
 
         public VH(View itemView) {
             super(itemView);
 
-            footballmessage = (TextView)itemView.findViewById(R.id.football_message);
+            time = (TextView)itemView.findViewById(R.id.shedule_time);
+            date = (TextView)itemView.findViewById(R.id.shedule_date);
+            vs = (TextView)itemView.findViewById(R.id.vs);
 
 
         }

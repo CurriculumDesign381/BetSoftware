@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+
+    <tab
+        id="@+id/tab_livebroadcast_demo"
+        title="live"
+        icon="@mipmap/livebroadcast_demo2"
+        />
+
+
+    <tab
+        id="@+id/tab_betrecord"
+        title="record"
+        icon="@mipmap/bet_demo2"
+
+        />
+
+    <tab
+        id="@+id/tab_schedule"
+        title="schedule"
+        icon="@mipmap/ic_restaurants"
+
+        />
+
+    <tab
+        id="@+id/tab_mine"
+        title="mine"
+        icon="@mipmap/mine_demo2"
+
+        />
+  <!--  barColorWhenSelected="#FF9800"-->
+</tabs>

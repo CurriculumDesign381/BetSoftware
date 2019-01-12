@@ -1,6 +1,7 @@
 package com.cqut.faymong.betsoftware.ui;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,12 +9,15 @@ import android.view.ViewGroup;
 
 
 import com.cqut.faymong.betsoftware.R;
+import com.cqut.faymong.betsoftware.entity.TabMessage;
 import com.cqut.faymong.betsoftware.event.TabSelectedEvent;
 import com.cqut.faymong.betsoftware.ui.first.FirstFragment;
+import com.cqut.faymong.betsoftware.ui.fourth.FourthFragment;
 import com.cqut.faymong.betsoftware.ui.second.QQSecondFragment;
 import com.cqut.faymong.betsoftware.ui.third.ThirdFragment;
 import com.cqut.faymong.betsoftware.view.BottomBar;
 import com.cqut.faymong.betsoftware.view.BottomBarTab;
+import com.roughike.bottombar.OnTabSelectListener;
 
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -28,16 +32,15 @@ public class MainFragment extends SupportFragment {
     public static final int FIRST = 0;
     public static final int SECOND = 1;
     public static final int THIRD = 2;
+    public static final int FOURTH = 3;
 
-    private SupportFragment[] mFragments = new SupportFragment[3];
+    private SupportFragment[] mFragments = new SupportFragment[4];
 
     private BottomBar mBottomBar;
 
 
     public static MainFragment newInstance() {
-
         Bundle args = new Bundle();
-
         MainFragment fragment = new MainFragment();
         fragment.setArguments(args);
         return fragment;
@@ -47,7 +50,8 @@ public class MainFragment extends SupportFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.wechat_fragment_main, container, false);
-        initView(view);
+//        initView(view);
+        initViewSecond(view);
         return view;
     }
 
@@ -58,20 +62,22 @@ public class MainFragment extends SupportFragment {
         if (firstFragment == null) {
             mFragments[FIRST] = FirstFragment.newInstance();
             mFragments[SECOND] = QQSecondFragment.newInstance();
-            mFragments[THIRD] = ThirdFragment.newInstance();
+            mFragments[FOURTH] = ThirdFragment.newInstance();
+            mFragments[THIRD] = FourthFragment.newInstance();
 
 
             loadMultipleRootFragment(R.id.fl_tab_container, FIRST,
                     mFragments[FIRST],
                     mFragments[SECOND],
+                    mFragments[FOURTH],
                     mFragments[THIRD]);
         } else {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
-
             // 这里我们需要拿到mFragments的引用
             mFragments[FIRST] = firstFragment;
             mFragments[SECOND] = findFragment(QQSecondFragment.class);
-            mFragments[THIRD] = findFragment(ThirdFragment.class);
+            mFragments[FOURTH]= findFragment(ThirdFragment.class);
+            mFragments[THIRD] = findFragment(FourthFragment.class);
 
         }
     }
@@ -91,7 +97,6 @@ public class MainFragment extends SupportFragment {
             @Override
             public void onTabSelected(int position, int prePosition) {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
-
             }
 
             @Override
@@ -107,6 +112,16 @@ public class MainFragment extends SupportFragment {
             }
         });
     }
+
+private void initViewSecond(View view){
+    com.roughike.bottombar.BottomBar bottomBar = (com.roughike.bottombar.BottomBar) view.findViewById(R.id.bottomBar);
+    bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+        @Override
+        public void onTabSelected(@IdRes int tabId) {
+            showHideFragment(mFragments[TabMessage.get(tabId, true)]);
+        }
+    });
+}
 
     @Override
     public void onFragmentResult(int requestCode, int resultCode, Bundle data) {

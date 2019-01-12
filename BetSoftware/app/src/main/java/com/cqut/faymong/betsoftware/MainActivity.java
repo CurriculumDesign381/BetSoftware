@@ -175,8 +175,8 @@ public class MainActivity extends SupportActivity  implements BaseMainFragment.O
 
                             Log.d(TAG, "onStringAvailable: " + list);
 
-                            Toasty.info(MainActivity.this, "hometeam:" + list.get(0).get("hometeam").toString() + "  " + list.get(0).get("score").toString() +
-                                    "  " + "awayteam:" + list.get(0).get("awayteam").toString()).show();
+                            Toasty.info(MainActivity.this, "主队:" + list.get(0).get("hometeam").toString() + "\n" + "    \t\t\t\t"+list.get(0).get("score").toString() +
+                                     "\n" + "客队:" + list.get(0).get("awayteam").toString()).show();
 //
                             mp.start();
                         }

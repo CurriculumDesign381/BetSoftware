@@ -31,7 +31,7 @@
                 android:id="@+id/blackOutLayoutName5"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/bwater_top_input"
+
                 android:orientation="horizontal"
                 android:gravity="left|center_horizontal"
                 android:paddingTop="0dp"
@@ -69,7 +69,7 @@
                 android:id="@+id/blackOutLayoutName1"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/bwater_top_input"
+
                 android:orientation="horizontal"
                 android:gravity="left|center_horizontal"
                 android:paddingTop="0dp"
@@ -107,7 +107,7 @@
                 android:id="@+id/blackOutLayoutName4"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/bwater_top_input"
+
                 android:orientation="horizontal"
                 android:gravity="left|center_horizontal"
                 android:paddingTop="0dp"
@@ -144,7 +144,7 @@
                 android:id="@+id/blackOutLayoutName2"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/bwater_top_input"
+
                 android:orientation="horizontal"
                 android:gravity="left|center_horizontal"
                 android:paddingTop="0dp"

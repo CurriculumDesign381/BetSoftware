@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:orientation="vertical"
+    >
+
+    <ImageView
+        android:id="@+id/img_avatar"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="3sp"
+        android:src="@drawable/five_pointedstar"
+        android:tint="@color/bg_btn" />
+    <!--    android:layout_alignTop="@+id/tv_time"-->
+    <!--   android:layout_alignTop="@+id/tv_time"
+        android:layout_toEndOf="@+id/img_avatar"-->
+
+    <TextView
+        android:id="@+id/shedule_date"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"
+        android:text="星期天12\/16"
+        android:textColor="@android:color/black"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/shedule_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        android:text="17:30"/>
+
+    <TextView
+        android:id="@+id/vs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
+        android:text="利瓦迪亚高斯 19岁以下 v PAOK Salonika U19"
+        android:textSize="12sp"
+        android:layout_marginLeft="3sp"
+        android:layout_marginRight="3sp"
+        android:textColor="@android:color/black"/>
+
+    <ImageView
+        android:id="@+id/img_livebroad"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/livebroadcast_icon"
+        android:tint="@color/bg_btn"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="#99999999"/>
+</RelativeLayout>

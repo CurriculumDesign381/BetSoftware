@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.cqut.faymong.betsoftware.R;
 import com.cqut.faymong.betsoftware.activity.AddbetAccountActivity;
+import com.cqut.faymong.betsoftware.activity.CheckTypeActivity;
 import com.cqut.faymong.betsoftware.activity.InformationDisplayActivity;
 
 import com.cqut.faymong.betsoftware.base.BaseMainFragment;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 
+import es.dmoral.toasty.Toasty;
 import okhttp3.Call;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -41,7 +43,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * Created by fei on 2018/11/14.
  */
-
+//功能列表
 public class ThirdFragment extends BaseMainFragment {
 
     private LinearLayout l1;
@@ -49,6 +51,7 @@ public class ThirdFragment extends BaseMainFragment {
     private LinearLayout l3;
     private  LinearLayout l6;
     private  LinearLayout l7;
+    private  LinearLayout l8;
     private  String json;
     public  String account;
     List<Map<String ,Object>> list;
@@ -69,6 +72,7 @@ public class ThirdFragment extends BaseMainFragment {
         l3= view.findViewById(R.id.linear3);
         l6 = view.findViewById(R.id.linear6);
         l7 = view.findViewById(R.id.linear7);
+        l8 = view.findViewById(R.id.linear8);
 
         getdata();
         View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -80,7 +84,8 @@ public class ThirdFragment extends BaseMainFragment {
                 switch (v.getId()) {
                     case R.id.linear1:
                         for(int i =0; i<list.size();i++)
-                            allLogin(list.get(i).get("supid").toString(),list.get(i).get("domain").toString(),list.get(i).get("account").toString(),list.get(i).get("password").toString(),list.get(i).get("betamount").toString());
+                            allLogin(list.get(i).get("supid").toString(),list.get(i).get("domain").toString(),list.get(i).get("account").toString());
+                        Toasty.info(getActivity(), "登录成功", Toast.LENGTH_SHORT, true).show();
                         break;
                     case R.id.linear3:
                         Intent intent = new Intent(getActivity(),AddbetAccountActivity.class);
@@ -93,8 +98,12 @@ public class ThirdFragment extends BaseMainFragment {
                         break;
                     case R.id.linear7:
                         for(int i =0;i<list.size();i++)
-                        allCancel(list.get(i).get("domain").toString(),list.get(i).get("account").toString());
+                        allCancel(list.get(i).get("supid").toString(),list.get(i).get("account").toString(),list.get(i).get("domain").toString());
+                        Toasty.info(getActivity(), "注销成功", Toast.LENGTH_SHORT, true).show();
                         break;
+                    case R.id.linear8:
+                            Intent intent3 = new Intent(getActivity(),CheckTypeActivity.class);
+                            startActivity(intent3);
                     default:
                         break;
                 }
@@ -104,6 +113,7 @@ public class ThirdFragment extends BaseMainFragment {
         l3.setOnClickListener(onClickListener);
         l6.setOnClickListener(onClickListener);
         l7.setOnClickListener(onClickListener);
+        l8.setOnClickListener(onClickListener);
         return view;
     }
 
@@ -134,7 +144,7 @@ public class ThirdFragment extends BaseMainFragment {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Toast.makeText(getActivity(), e.toString() + "error", Toast.LENGTH_SHORT).show();
+                        Toasty.error(getActivity(), "下注账号为空", Toast.LENGTH_SHORT, true).show();
                     }
 
                     @Override
@@ -154,51 +164,59 @@ public class ThirdFragment extends BaseMainFragment {
 
 
 
-   public void allLogin(String supid,String domain,String username, String password, String betamount){
-     String url = "http://119.23.45.41:8000/login";
+//   public void allLogin(String supid,String domain,String username, String password, String betamount){
+public void allLogin(String supid,String domain,String account){
+     String url = "http://119.23.45.41:8080/login_bet_account.php";
      OkHttpUtils
             .get()
             .url(url)
              .addParams("supid",supid)
             .addParams("domain", domain)
-            .addParams("username",username)
-            .addParams("password",password)
-            .addParams("betamount",betamount)
+/*            .addParams("username",username)
+            .addParams("password",password)*/
+            .addParams("account",account)
             .build()
             .execute(new StringCallback() {
                 @Override
                 public void onError(Call call, Exception e, int id) {
-                    Toast.makeText(getActivity(), e.toString() + "error", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getActivity(), "error", Toast.LENGTH_SHORT, true).show();
                 }
 
                 @Override
                 public void onResponse(String response, int id) {
-
-                    Toast.makeText(getActivity(), response.toString(), Toast.LENGTH_SHORT).show();
-
+                    if(Integer.parseInt(response)==0)
+                        Toasty.info(getActivity(), "登录失败", Toast.LENGTH_SHORT, true).show();
+//                    else if(Integer.parseInt(response)==1)
+//                        Toasty.info(getActivity(), "登录成功", Toast.LENGTH_SHORT, true).show();
                 }
             });
 }
 
-public  void  allCancel(String domain, String username){
+public  void  allCancel(String supid, String account,String domain){
 
-    String url = "http://119.23.45.41:8000/logout";
+    String url = "http://119.23.45.41:8080/logout_bet_account.php";
     OkHttpUtils
             .get()
             .url(url)
-            .addParams("domain", domain)
-            .addParams("username",username)
+            .addParams("supid", supid)
+            .addParams("account",account)
+            .addParams("domain",domain)
             .build()
             .execute(new StringCallback() {
                 @Override
                 public void onError(Call call, Exception e, int id) {
-                    Toast.makeText(getActivity(), e.toString() + "error", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getActivity(), "error", Toast.LENGTH_SHORT, true).show();
                 }
 
                 @Override
                 public void onResponse(String response, int id) {
                /*     allLogin(response);*/
-                    Toast.makeText(getActivity(), response.toString(), Toast.LENGTH_SHORT).show();
+                    if(Integer.parseInt(response)==0)
+                        Toasty.info(getActivity(), "注销失败", Toast.LENGTH_SHORT, true).show();
+//                    else if(Integer.parseInt(response)==1)
+//                        Toasty.info(getActivity(), "注销成功", Toast.LENGTH_SHORT, true).show();
+
+
 
                 }
             });

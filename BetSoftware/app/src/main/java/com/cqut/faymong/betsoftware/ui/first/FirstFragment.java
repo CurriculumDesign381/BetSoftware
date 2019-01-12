@@ -148,7 +148,7 @@ public class FirstFragment extends BaseMainFragment implements SwipeRefreshLayou
                 refreshData();
                 mRefreshLayout.setRefreshing(false);
             }
-        }, 250);
+        }, 500);
 
     }
 
@@ -361,44 +361,49 @@ public void getdata(){
                         Gson gson = new Gson();
                         /*        jsonObject =  parseJSONWithJSONObject(response);*/
                         JSONArray      jsonArray =  parseJSONWithJSONObject(res);
+                        if(jsonArray!=null)
                         list = gson.fromJson(jsonArray.toString(), new TypeToken<List<Map<String, Object>>>() {
                         }.getType());
-
-                        Log.d(TAG, "onStringAvailable: "+list);
-                        mRecy.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                List<Chat> chatList = null;
+                        if(list.size()!=0) {
+                            Log.d(TAG, "onStringAvailable: " + list);
+                            mRecy.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    List<Chat> chatList = null;
                                     chatList = initDatas();
 
-                                    if(chatList!=null)
+                                    if (chatList != null)
                                         Toasty.success(getActivity(), "刷新成功", Toast.LENGTH_SHORT, true).show();
                                     else
                                         Toasty.info(getActivity(), "刷新失败", Toast.LENGTH_SHORT, true).show();
 
 
-                                //还可以更新其他的控件
+                                    //还可以更新其他的控件
                                     mAdapter = new ChatAdapter(_mActivity);
                                     mAdapter.setDatas(chatList);
-                                mRecy.setAdapter(mAdapter);
-                                /*   JSONObject obj = new JSONObject().fromObject(sd);*/
+                                    mRecy.setAdapter(mAdapter);
+                                    /*   JSONObject obj = new JSONObject().fromObject(sd);*/
 
-                                mAdapter.setOnItemClickListener(new OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
-                                        // 因为启动的MsgFragment是MainFragment的兄弟Fragment,所以需要MainFragment.start()
+                                    mAdapter.setOnItemClickListener(new OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
+                                            // 因为启动的MsgFragment是MainFragment的兄弟Fragment,所以需要MainFragment.start()
 
-                                        // 也可以像使用getParentFragment()的方式,拿到父Fragment来操作 或者使用 EventBusActivityScope
-                                        Chat chat = mAdapter.getMsg(position);
-                                        eventid = chat.evenid;
-                                        keepLoginStatus(eventid);
-                                        ((MainFragment) getParentFragment()).startBrotherFragment(footballmessageFragment.newInstance(mAdapter.getMsg(position)));
+                                            // 也可以像使用getParentFragment()的方式,拿到父Fragment来操作 或者使用 EventBusActivityScope
+                                            Chat chat = mAdapter.getMsg(position);
+                                            eventid = chat.evenid;
+                                            keepLoginStatus(eventid);
+                                            ((MainFragment) getParentFragment()).startBrotherFragment(footballmessageFragment.newInstance(mAdapter.getMsg(position)));
 
 
-                                    }
-                                });
-                            }
-                        });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                        else{
+                            Toasty.info(getActivity(), "暂时没有比赛", Toast.LENGTH_SHORT, true).show();
+                        }
                     }
                 });
     }

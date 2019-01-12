@@ -43,6 +43,7 @@ public class InformationDisplayActivity extends SupportActivity implements Swipe
     Column<String> account;
     Column<String> domain;
     Column<String> betamount;
+    Column<String> state;
     List<String> name_selected = new ArrayList<String>();
     public String account2;
     Column<Boolean> update;
@@ -66,12 +67,9 @@ public class InformationDisplayActivity extends SupportActivity implements Swipe
     public void createTable(){
         table = (SmartTable<bet>)findViewById(R.id.table);
         table.getConfig().setFixedYSequence(false);
-        table.getConfig().setFixedYSequence(false);
-
-
-
         account = new Column<>("下注账户", "account");
         domain = new Column<>("域名", "domain");
+        state = new Column<>("登录成功", "state");
         int size = DensityUtils.dp2px(this,20);
         update = new Column<>("编辑", "update",new ImageResDrawFormat<Boolean>(size,size) {    //设置"操作"这一列以图标显示 true、false 的状态
             @Override
@@ -157,7 +155,6 @@ public class InformationDisplayActivity extends SupportActivity implements Swipe
     }
 
     public void getdata() {
-
         SharedPreferences share = InformationDisplayActivity.this.getSharedPreferences("account",MODE_PRIVATE);
         loginAccount = share.getString("account","account");
         String url = "http://119.23.45.41:8080/get_bet_account.php";
@@ -186,10 +183,22 @@ public class InformationDisplayActivity extends SupportActivity implements Swipe
                         Toast.makeText(InformationDisplayActivity.this,list.toString(),Toast.LENGTH_SHORT).show();*/
                         List<bet> codeList = new ArrayList<bet>();
                      for (int i =0;i<list.size();i++){
-                         codeList.add(new bet(list.get(i).get("account").toString(),list.get(i).get("domain").toString(),list.get(i).get("betamount").toString(),false,false));
-                     }
+                         String betsuccess ="否";
+                         if(Integer.parseInt(list.get(i).get("stat").toString())==1) {
+                             betsuccess = "是";
+                             if(list.get(i).get("account")!=null&list.get(i).get("domain")!=null&list.get(i).get("betamount")!=null)
+                             codeList.add(new bet(list.get(i).get("account").toString(), list.get(i).get("domain").toString(), list.get(i).get("betamount").toString(), false, false, betsuccess));
+                         }
+                         else{
+                             betsuccess = "否";
+                             if(list.get(i).get("account")!=null&list.get(i).get("domain")!=null&list.get(i).get("betamount")!=null)
+                             codeList.add(new bet(list.get(i).get("account").toString(),
+                                     list.get(i).get("domain").toString(),
+                                     list.get(i).get("betamount").toString(), false, false, betsuccess));
+                         }
+                         }
 
-                        final TableData<bet> tableData = new TableData<>("测试标题",codeList, account, domain,betamount,update,delete);
+                        final TableData<bet> tableData = new TableData<>("测试标题",codeList, account, domain,betamount,state,update,delete);
                         table.setTableData(tableData);
                     }
                 });
@@ -220,10 +229,10 @@ public class InformationDisplayActivity extends SupportActivity implements Swipe
                             Toasty.info(InformationDisplayActivity.this, "删除失败", Toast.LENGTH_SHORT, true).show();
                         List<bet> codeList = new ArrayList<bet>();
                         for (int i =0;i<list.size();i++){
-                            codeList.add(new bet(list.get(i).get("account").toString(),list.get(i).get("domain").toString(),list.get(i).get("betamount").toString(),false,false));
+                            codeList.add(new bet(list.get(i).get("account").toString(),list.get(i).get("domain").toString(),list.get(i).get("betamount").toString(),false,false,"否"));
                         }
 
-                        final TableData<bet> tableData = new TableData<>("测试标题",codeList, account, domain,betamount,update,delete);
+                        final TableData<bet> tableData = new TableData<>("测试标题",codeList, account, domain,betamount,state,update,delete);
                         table.setTableData(tableData);
                         table.refreshDrawableState();
                         table.invalidate();

@@ -82,7 +82,7 @@ public class updateAccountActivity extends AppCompatActivity {
                 switch (v.getId()) {
 
                     case R.id.updateaccount:
-                        Toast.makeText(updateAccountActivity.this, "您点击添加button"+account, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(updateAccountActivity.this, "您点击添加button"+account, Toast.LENGTH_SHORT).show();
                         getdata();
 
 

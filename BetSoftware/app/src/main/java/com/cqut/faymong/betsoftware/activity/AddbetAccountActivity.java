@@ -39,6 +39,8 @@ public class AddbetAccountActivity extends AppCompatActivity {
     private EditText ed_domain;
     private  EditText ed_betamount;
     private Button button;
+    private String status ="0";
+    private String  dType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,8 @@ public class AddbetAccountActivity extends AppCompatActivity {
 
                 switch (v.getId()) {
                     case R.id.addaccount:
-                        getdata();
+                        checkDomain(domain);
+
                         break;
                     default:
                         break;
@@ -87,7 +90,45 @@ public class AddbetAccountActivity extends AppCompatActivity {
         ed_domain = findViewById(R.id.domain);
         button = findViewById(R.id.addaccount);
     }
+    public void checkDomain(String check_domainText ) {
+        check_domainText =ed_domain.getText().toString();
 
+        String url = "http://119.23.45.41:8000/checker";
+        OkHttpUtils
+                .get()
+                .url(url)
+//                .addParams("account", oldAccount)
+//                .addParams("betaccount", oldBetAccount)
+//                .addParams("domain", oldDomain)
+//                .addParams("new_account", newAccount)
+//                .addParams("new_betaccount", newBetaccount)
+//                .addParams("new_betpassword", newPassword)
+//                .addParams("new_domain", newDomain)
+                .addParams("domain", check_domainText)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Toasty.error(AddbetAccountActivity.this, "请重新填写网址", Toast.LENGTH_SHORT, true).show();
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+
+                        if(response.equals(""))
+                            Toasty.success(AddbetAccountActivity.this, "暂无该网址类型", Toast.LENGTH_SHORT, true).show();
+                        else {
+//                            Toasty.info(AddbetAccountActivity.this, "网址类型为：" + response, Toast.LENGTH_SHORT, true).show();
+                            status = "1";
+                            dType  = response;
+                            if(status.equals("1"))
+                                getdata();
+                        }
+
+
+                    }
+                });
+    }
 
     public void getdata() {
         String url = "http://119.23.45.41:8080/add_bet_account.php";
@@ -99,18 +140,19 @@ public class AddbetAccountActivity extends AppCompatActivity {
                 .addParams("betpassword",betpassword)
                 .addParams("domain",domain)
                 .addParams("betamount",betamount)
+                .addParams("dtype",dType)
                 .build()
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        Toasty.error(AddbetAccountActivity.this, "请检查网络", Toast.LENGTH_SHORT, true).show();
+                        Toasty.error(AddbetAccountActivity.this, "请检查信息是否填写正确", Toast.LENGTH_SHORT, true).show();
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
 
                         if(Integer.parseInt(response)==1)
-                            Toasty.success(AddbetAccountActivity.this, "添加成功", Toast.LENGTH_SHORT, true).show();
+                                        Toasty.success(AddbetAccountActivity.this, "添加成功", Toast.LENGTH_SHORT, true).show();
                          else
                             Toasty.info(AddbetAccountActivity.this, "添加失败", Toast.LENGTH_SHORT, true).show();
                     }
