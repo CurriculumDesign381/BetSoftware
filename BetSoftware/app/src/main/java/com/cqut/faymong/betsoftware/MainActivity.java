@@ -62,7 +62,7 @@ public class MainActivity extends SupportActivity  implements BaseMainFragment.O
             loadRootFragment(R.id.fl_container, MainFragment.newInstance());
         }
 
-//        new Thread(new MyThread()).start();
+        new Thread(new MyThread()).start();
 
 
 

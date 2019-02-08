@@ -173,6 +173,7 @@ public class InformationDisplayActivity extends SupportActivity implements Swipe
                     public void onResponse(String response, int id) {
                      /*   Toast.makeText(InformationDisplayActivity.this, response.toString(), Toast.LENGTH_SHORT).show();*/
                         Gson gson = new Gson();
+                        if(!response.equals("{}")){
                         JSONArray jsonArray = parseJSONWithJSONObject(response);
                         list = gson.fromJson(jsonArray.toString(), new TypeToken<List<Map<String, Object>>>() {
                         }.getType());
@@ -182,24 +183,28 @@ public class InformationDisplayActivity extends SupportActivity implements Swipe
                      /*   if(list.size()!=0)
                         Toast.makeText(InformationDisplayActivity.this,list.toString(),Toast.LENGTH_SHORT).show();*/
                         List<bet> codeList = new ArrayList<bet>();
-                     for (int i =0;i<list.size();i++){
-                         String betsuccess ="否";
-                         if(Integer.parseInt(list.get(i).get("stat").toString())==1) {
+                     for (int i =0;i<list.size();i++) {
+                         String betsuccess = "否";
+                         if (Integer.parseInt(list.get(i).get("stat").toString()) == 1) {
                              betsuccess = "是";
-                             if(list.get(i).get("account")!=null&list.get(i).get("domain")!=null&list.get(i).get("betamount")!=null)
-                             codeList.add(new bet(list.get(i).get("account").toString(), list.get(i).get("domain").toString(), list.get(i).get("betamount").toString(), false, false, betsuccess));
-                         }
-                         else{
+                             if (list.get(i).get("account") != null & list.get(i).get("domain") != null & list.get(i).get("betamount") != null)
+                                 codeList.add(new bet(list.get(i).get("account").toString(), list.get(i).get("domain").toString(), list.get(i).get("betamount").toString(), false, false, betsuccess));
+                         } else {
                              betsuccess = "否";
-                             if(list.get(i).get("account")!=null&list.get(i).get("domain")!=null&list.get(i).get("betamount")!=null)
-                             codeList.add(new bet(list.get(i).get("account").toString(),
-                                     list.get(i).get("domain").toString(),
-                                     list.get(i).get("betamount").toString(), false, false, betsuccess));
+                             if (list.get(i).get("account") != null & list.get(i).get("domain") != null & list.get(i).get("betamount") != null)
+                                 codeList.add(new bet(list.get(i).get("account").toString(),
+                                         list.get(i).get("domain").toString(),
+                                         list.get(i).get("betamount").toString(), false, false, betsuccess));
                          }
-                         }
+                     }
+
 
                         final TableData<bet> tableData = new TableData<>("测试标题",codeList, account, domain,betamount,state,update,delete);
                         table.setTableData(tableData);
+                        }
+                        else
+                            Toasty.info(InformationDisplayActivity.this, "列表信息为空", Toast.LENGTH_SHORT, true).show();
+
                     }
                 });
     }

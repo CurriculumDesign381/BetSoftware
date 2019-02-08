@@ -83,9 +83,14 @@ public class ThirdFragment extends BaseMainFragment {
                 // view.getId() 得到点击的控件的id
                 switch (v.getId()) {
                     case R.id.linear1:
-                        for(int i =0; i<list.size();i++)
-                            allLogin(list.get(i).get("supid").toString(),list.get(i).get("domain").toString(),list.get(i).get("account").toString());
-                        Toasty.info(getActivity(), "登录成功", Toast.LENGTH_SHORT, true).show();
+                        if(list!=null) {
+                            for (int i = 0; i < list.size(); i++)
+                                allLogin(list.get(i).get("supid").toString(), list.get(i).get("domain").toString(), list.get(i).get("account").toString());
+
+                            Toasty.info(getActivity(), "登录成功", Toast.LENGTH_SHORT, true).show();
+                        }
+                        else
+                        Toasty.info(getActivity(), "登录失败", Toast.LENGTH_SHORT, true).show();
                         break;
                     case R.id.linear3:
                         Intent intent = new Intent(getActivity(),AddbetAccountActivity.class);
@@ -97,9 +102,13 @@ public class ThirdFragment extends BaseMainFragment {
                         startActivity(intent2);
                         break;
                     case R.id.linear7:
-                        for(int i =0;i<list.size();i++)
-                        allCancel(list.get(i).get("supid").toString(),list.get(i).get("account").toString(),list.get(i).get("domain").toString());
-                        Toasty.info(getActivity(), "注销成功", Toast.LENGTH_SHORT, true).show();
+                        if(list!=null) {
+                            for (int i = 0; i < list.size(); i++)
+                                allCancel(list.get(i).get("supid").toString(), list.get(i).get("account").toString(), list.get(i).get("domain").toString());
+                            Toasty.info(getActivity(), "注销成功", Toast.LENGTH_SHORT, true).show();
+                        }
+                        else
+                            Toasty.info(getActivity(), "注销失败", Toast.LENGTH_SHORT, true).show();
                         break;
                     case R.id.linear8:
                             Intent intent3 = new Intent(getActivity(),CheckTypeActivity.class);
